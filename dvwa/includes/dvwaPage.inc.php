@@ -17,98 +17,69 @@ if( !isset( $html ) ) {
 	$html = "";
 }
 
+// R9 / F4: the `security` cookie is signed with HMAC-SHA-256 (key K_cookie, derived with HKDF from
+// the master secret in secure_crypto.php). A missing, unsigned or hand-edited cookie is ignored.
+require_once DVWA_WEB_PAGE_TO_ROOT . 'vulnerabilities/cryptography/source/secure_crypto.php';
+
 // Valid security levels
 $security_levels = array('low', 'medium', 'high', 'impossible');
-if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $security_levels ) ) {
-	// Set security cookie to impossible if no cookie exists
-	if( in_array( $_DVWA[ 'default_security_level' ], $security_levels) ) {
+
+// Session hardening (all levels): reject unknown/attacker-chosen session ids, cookies only.
+ini_set('session.use_strict_mode', '1');
+ini_set('session.use_only_cookies', '1');
+ini_set('session.use_trans_sid', '0');
+
+if( dvwaSecurityCookieVerify( $_COOKIE[ 'security' ] ?? null ) === false ) {
+	// No cookie, or a cookie that fails the HMAC check: fall back to the configured default
+	// (impossible unless changed) and issue a freshly signed cookie.
+	if( isset( $_COOKIE[ 'security' ] ) ) {
+		error_log( 'dvwa: rejected security cookie with invalid HMAC' );
+	}
+	if( in_array( $_DVWA[ 'default_security_level' ], $security_levels) && !isset( $_COOKIE[ 'security' ] ) ) {
 		dvwaSecurityLevelSet( $_DVWA[ 'default_security_level' ] );
 	} else {
-		dvwaSecurityLevelSet( 'impossible' );
+		dvwaSecurityLevelSet( 'impossible' );   // tampered cookie -> the safe level
 	}
 	// If the cookie wasn't set then the session flags need updating.
 	dvwa_start_session();
 }
 
+/** Secure flag: on when the request reached us over HTTPS (direct, or via the TLS proxy). */
+function dvwaCookieSecure() {
+	return getenv( 'FORCE_SECURE_COOKIES' ) === '1'
+		|| ( !empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' );
+}
+
+/** The same hardened flags for every session cookie, at every security level. */
+function dvwaSessionCookieParams() {
+	$security_level = dvwaSecurityLevelGet();
+	session_set_cookie_params([
+		'lifetime' => 0,                 // session cookie, gone when the browser closes
+		'path'     => '/',
+		'secure'   => dvwaCookieSecure(),
+		'httponly' => true,              // not readable from JavaScript (XSS cannot steal it)
+		'samesite' => ( $security_level == 'impossible' ) ? 'Strict' : 'Lax',
+	]);
+}
+
 /*
- * This function is called after login and when you change the security level.
- * It gets the security level and sets the httponly and samesite cookie flags
- * appropriately.
- *
- * To force an update of the cookie flags we need to update the session id,
- * just setting the flags and doing a session_start() does not change anything.
- * For this, session_id() or session_regenerate_id() can be used.
- * Both keep the existing session values, so nothing is lost,
- * it will just cause a new Set-Cookie header to be sent with the new right
- * flags and the new id (or the same one if we wish to keep it).
+ * Called after login and when the security level changes, to (re)send the session
+ * cookie with the right flags. A fresh id is always generated here (prevents session fixation).
 */
 function dvwa_start_session() {
-	// This will setup the session cookie based on
-	// the security level.
-
-	$security_level = dvwaSecurityLevelGet();
-	if ($security_level == 'impossible') {
-		$httponly = true;
-		$samesite = "Strict";
-	}
-	else {
-		$httponly = false;
-		$samesite = "";
-	}
-
-	$maxlifetime = 86400;
-	$secure = false;
-	$domain = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
-
-	/*
-	 * Need to do this as you can't update the settings of a session
-	 * while it is open. So check if one is open, close it if needed
-	 * then update the values and start it again.
-	*/
 	if (session_status() == PHP_SESSION_ACTIVE) {
 		session_write_close();
 	}
-
-	session_set_cookie_params([
-		'lifetime' => $maxlifetime,
-		'path' => '/',
-		'domain' => $domain,
-		'secure' => $secure,
-		'httponly' => $httponly,
-		'samesite' => $samesite
-	]);
-
-	/*
-	 * We need to force a new Set-Cookie header with the updated flags by updating
-	 * the session id, either regenerating it or setting it to a value, because
-	 * session_start() might not generate a Set-Cookie header if a cookie already
-	 * exists.
-	 *
-	 * For impossible security level, we regenerate the session id, PHP will
-	 * generate a new random id. This is good security practice because it
-	 * prevents the reuse of a previous unauthenticated id that an attacker
-	 * might have knowledge of (aka session fixation attack).
-   *
-	 * For lower levels, we want to allow session fixation attacks, so if an id
-	 * already exists, we don't want it to change after authentication. We thus
-	 * set the id to its previous value using session_id(), which will force
-	 * the Set-Cookie header.
-	*/
-	if ($security_level == 'impossible') {
-		session_start();
-		session_regenerate_id(); // force a new id to be generated
-	}
-	else {
-		if (isset($_COOKIE[session_name()])) // if a session id already exists
-			session_id($_COOKIE[session_name()]); // we keep the same id
-		session_start(); // otherwise a new one will be generated here
-	}
+	dvwaSessionCookieParams();
+	session_start();
+	session_regenerate_id( true );   // new random id, old session data file deleted
 }
 
 if (array_key_exists ("Login", $_POST) && $_POST['Login'] == "Login") {
 	dvwa_start_session();
 } else {
 	if (!session_id()) {
+		dvwaSessionCookieParams();
 		session_start();
 	}
 }
@@ -138,6 +109,8 @@ function dvwaPageStartup( $pActions ) {
 }
 
 function dvwaLogin( $pUsername ) {
+	// R9: a new session id at the moment of authentication (session fixation defence).
+	session_regenerate_id( true );
 	$dvwaSession =& dvwaSessionGrab();
 	$dvwaSession[ 'username' ] = $pUsername;
 }
@@ -200,9 +173,10 @@ function dvwaThemeGet() {
 function dvwaSecurityLevelGet() {
 	global $_DVWA;
 
-	// If there is a security cookie, that takes priority.
+	// If there is a security cookie with a valid HMAC, that takes priority.
 	if (isset($_COOKIE['security'])) {
-		return $_COOKIE[ 'security' ];
+		$level = dvwaSecurityCookieVerify( $_COOKIE['security'] );
+		return ( $level !== false ) ? $level : 'impossible';   // tampered -> safe level
 	}
 
 	// If not, check to see if authentication is disabled, if it is, use
@@ -215,16 +189,43 @@ function dvwaSecurityLevelGet() {
 	return 'impossible';
 }
 
-function dvwaSecurityLevelSet( $pSecurityLevel ) {
-	if( $pSecurityLevel == 'impossible' ) {
-		$httponly = true;
+/** MAC over a fixed label + the level, so the tag cannot be reused for any other value. */
+function dvwaSecurityCookieMac( $pLevel ) {
+	$k = sc_cookie_key();
+	if( $k === false ) {
+		return false;   // no master key -> no valid cookies at all (fail closed: always 'impossible')
 	}
-	else {
-		$httponly = false;
-	}
+	return rtrim( strtr( base64_encode( hash_hmac( 'sha256', 'dvwa-security-level|' . $pLevel, $k, true ) ), '+/', '-_' ), '=' );
+}
 
-	setcookie( 'security', $pSecurityLevel, 0, "/", "", false, $httponly );
-	$_COOKIE['security'] = $pSecurityLevel;
+/** Returns the level if "<level>.<mac>" verifies (constant-time compare), otherwise false. */
+function dvwaSecurityCookieVerify( $pValue ) {
+	if( !is_string( $pValue ) || substr_count( $pValue, '.' ) !== 1 ) {
+		return false;
+	}
+	list( $level, $mac ) = explode( '.', $pValue );
+	if( !in_array( $level, array( 'low', 'medium', 'high', 'impossible' ), true ) ) {
+		return false;
+	}
+	$expected = dvwaSecurityCookieMac( $level );
+	return ( $expected !== false && hash_equals( $expected, $mac ) ) ? $level : false;
+}
+
+function dvwaSecurityLevelSet( $pSecurityLevel ) {
+	$mac = dvwaSecurityCookieMac( $pSecurityLevel );
+	if( $mac === false ) {
+		$pSecurityLevel = 'impossible';
+		$mac = '';
+	}
+	$value = $pSecurityLevel . '.' . $mac;
+	setcookie( 'security', $value, [
+		'expires'  => 0,
+		'path'     => '/',
+		'secure'   => dvwaCookieSecure(),
+		'httponly' => true,
+		'samesite' => 'Strict',
+	] );
+	$_COOKIE['security'] = $value;
 }
 
 function dvwaLocaleGet() {
