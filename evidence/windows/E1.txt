@@ -1,0 +1,14 @@
+## 1) GET /login.php (anonymous)   $ curl -i -c jar -b jar https://localhost/login.php
+
+PHPSESSID before login (from jar): 
+
+## 2) POST /login.php admin/password   $ curl -i -c jar -b jar -d 'username=admin&password=password&Login=Login&user_token=...'
+
+PHPSESSID after login (from jar):  
+=> session id did NOT change
+
+## 3) Old (pre-login) id is dead: request index.php with ONLY the old PHPSESSID
+
+## 4) New id works: GET /index.php with the jar
+
+## 5) Cookie jar (curl marks HttpOnly cookies with the #HttpOnly_ prefix; column 4 TRUE = Secure)

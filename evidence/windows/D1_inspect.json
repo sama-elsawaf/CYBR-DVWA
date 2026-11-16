@@ -1,0 +1,893 @@
+[
+    {
+        "Id": "487afcc861cd547adca3dc076b40e5cacd7539d04f7cc55582d6e698085f8b9c",
+        "Created": "2026-11-16T18:18:15.739856474Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "mariadbd"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 3245,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-16T18:18:16.541556001Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:7d829180b5b2a9ba74f6242876ab401a0d7dd338a807e522ef92bc9698760f20",
+        "ResolvConfPath": "/var/lib/docker/containers/487afcc861cd547adca3dc076b40e5cacd7539d04f7cc55582d6e698085f8b9c/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/487afcc861cd547adca3dc076b40e5cacd7539d04f7cc55582d6e698085f8b9c/hostname",
+        "HostsPath": "/var/lib/docker/containers/487afcc861cd547adca3dc076b40e5cacd7539d04f7cc55582d6e698085f8b9c/hosts",
+        "LogPath": "",
+        "Name": "/cybr-dvwa-db-1",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "cybr-dvwa_dvwa:/var/lib/mysql:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "local",
+                "Config": {}
+            },
+            "NetworkMode": "cybr-dvwa_dvwa",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\secrets\\db_root_password.txt",
+                    "Target": "/run/secrets/db_root_password",
+                    "ReadOnly": true,
+                    "BindOptions": {}
+                },
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\secrets\\db_password.txt",
+                    "Target": "/run/secrets/db_password",
+                    "ReadOnly": true,
+                    "BindOptions": {}
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\secrets\\db_password.txt",
+                "Destination": "/run/secrets/db_password",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\secrets\\db_root_password.txt",
+                "Destination": "/run/secrets/db_root_password",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "volume",
+                "Name": "cybr-dvwa_dvwa",
+                "Source": "/var/lib/docker/volumes/cybr-dvwa_dvwa/_data",
+                "Destination": "/var/lib/mysql",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "487afcc861cd",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "3306/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "MARIADB_PASSWORD_FILE=/run/secrets/db_password",
+                "MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_root_password",
+                "MARIADB_DATABASE=dvwa",
+                "MARIADB_USER=dvwa",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.19",
+                "LANG=C.UTF-8",
+                "MARIADB_VERSION=1:10.11.19+maria~ubu2204"
+            ],
+            "Cmd": [
+                "mariadbd"
+            ],
+            "Image": "docker.io/library/mariadb:10",
+            "Volumes": {
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "c988e2c4a323ea1d8c2a16cea933417ab784a425b1a3a3bcd1db928f0f956923",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:135c49b72e97143b73cc273dcdc95d2b035e3ebfbd536c3d72c65b715a8e06b5",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "cybr-dvwa",
+                "com.docker.compose.project.config_files": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\compose.yml",
+                "com.docker.compose.project.working_dir": "C:\\Users\\samas\\Documents\\CYBR-DVWA",
+                "com.docker.compose.service": "db",
+                "com.docker.compose.version": "5.6.1",
+                "org.opencontainers.image.authors": "MariaDB Community",
+                "org.opencontainers.image.base.name": "docker.io/library/ubuntu:jammy",
+                "org.opencontainers.image.description": "MariaDB Database for relational SQL",
+                "org.opencontainers.image.documentation": "https://hub.docker.com/_/mariadb/",
+                "org.opencontainers.image.licenses": "GPL-2.0",
+                "org.opencontainers.image.source": "https://github.com/MariaDB/mariadb-docker",
+                "org.opencontainers.image.title": "MariaDB Database",
+                "org.opencontainers.image.url": "https://github.com/MariaDB/mariadb-docker",
+                "org.opencontainers.image.vendor": "MariaDB Community",
+                "org.opencontainers.image.version": "10.11.19"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "8017fd9f5909661e6499591d99fd12993af61b7fd235df36c364ce862825dafa",
+            "SandboxKey": "/var/run/docker/netns/8017fd9f5909",
+            "Ports": {
+                "3306/tcp": null
+            },
+            "Networks": {
+                "cybr-dvwa_dvwa": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "cybr-dvwa-db-1",
+                        "db"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "abedb7efb6e0855d12de1bcf4ee6661aafcc91682bbbdb3f1c86dd1babdbf4c2",
+                    "EndpointID": "21143c050a64c200d3c25a8502ea57216f238e848c8cd5b58c9ae9519ac15af5",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "MacAddress": "ee:43:27:d9:07:ae",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "cybr-dvwa-db-1",
+                        "db",
+                        "487afcc861cd"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:135c49b72e97143b73cc273dcdc95d2b035e3ebfbd536c3d72c65b715a8e06b5",
+            "size": 2481,
+            "annotations": {
+                "com.docker.official-images.bashbrew.arch": "amd64",
+                "org.opencontainers.image.base.digest": "sha256:45e9ddc6895604674618a409ca9f73d301da8fdb75fe330e8e9a27b3b219e4ad",
+                "org.opencontainers.image.base.name": "ubuntu:jammy",
+                "org.opencontainers.image.created": "2026-11-11T23:30:00Z",
+                "org.opencontainers.image.revision": "bdfe641466a5312bb97d06a1a4e1fb411c49e6b6",
+                "org.opencontainers.image.source": "https://github.com/MariaDB/mariadb-docker.git#bdfe641466a5312bb97d06a1a4e1fb411c49e6b6:10.11",
+                "org.opencontainers.image.url": "https://hub.docker.com/_/mariadb",
+                "org.opencontainers.image.version": "10.11.19-jammy"
+            },
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "9402fb1c59368a33bd6c03b5571774b6812739c15fba571e771428b5affdf98e",
+        "Created": "2026-11-16T18:18:15.981110137Z",
+        "Path": "docker-php-entrypoint",
+        "Args": [
+            "apache2-foreground"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 3305,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-16T18:18:17.162467805Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:8029450682bd70e2e8cd1ffe8e46dd1885ff2a913296091cebfa8ba0a7d36498",
+        "ResolvConfPath": "/var/lib/docker/containers/9402fb1c59368a33bd6c03b5571774b6812739c15fba571e771428b5affdf98e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/9402fb1c59368a33bd6c03b5571774b6812739c15fba571e771428b5affdf98e/hostname",
+        "HostsPath": "/var/lib/docker/containers/9402fb1c59368a33bd6c03b5571774b6812739c15fba571e771428b5affdf98e/hosts",
+        "LogPath": "",
+        "Name": "/cybr-dvwa-dvwa-1",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "C:\\Users\\samas\\Documents\\CYBR-DVWA:/var/www/html:rw",
+                "C:\\Users\\samas\\Documents\\CYBR-DVWA\\config\\config.inc.php.dist:/var/www/html/config/config.inc.php:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "local",
+                "Config": {}
+            },
+            "NetworkMode": "cybr-dvwa_dvwa",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\secrets\\db_password.txt",
+                    "Target": "/run/secrets/db_password",
+                    "ReadOnly": true,
+                    "BindOptions": {}
+                },
+                {
+                    "Type": "tmpfs",
+                    "Target": "/var/www/html/secrets"
+                },
+                {
+                    "Type": "tmpfs",
+                    "Target": "/var/www/html/certs"
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/run/desktop/mnt/host/c/Users/samas/Documents/CYBR-DVWA/secrets/crypto_master_key.txt",
+                    "Target": "/run/secrets/crypto_master_key",
+                    "ReadOnly": true,
+                    "BindOptions": {}
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/run/desktop/mnt/host/c/Users/samas/Documents/CYBR-DVWA/secrets/crypto_master_key.txt",
+                "Destination": "/run/secrets/crypto_master_key",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\secrets\\db_password.txt",
+                "Destination": "/run/secrets/db_password",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA",
+                "Destination": "/var/www/html",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "tmpfs",
+                "Source": "",
+                "Destination": "/var/www/html/certs",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "tmpfs",
+                "Source": "",
+                "Destination": "/var/www/html/secrets",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\config\\config.inc.php.dist",
+                "Destination": "/var/www/html/config/config.inc.php",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "9402fb1c5936",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "DB_SERVER=db",
+                "CRYPTO_KEY_FILE=/run/secrets/crypto_master_key",
+                "DB_PASSWORD_FILE=/run/secrets/db_password",
+                "FORCE_SECURE_COOKIES=1",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=1198C0117593497A5EC5C199286AF1F9897469DC 49D9AF6BC72A80D6691719C8AA23F5BE9C7097D4 D95C03BC702BE9515344AE3374E44BC9067701A5",
+                "PHP_VERSION=8.5.11",
+                "PHP_URL=https://www.php.net/distributions/php-8.5.11.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.5.11.tar.xz.asc",
+                "PHP_SHA256=d9be75c08e8c316f4c8f4194d8fbe1750a15f6a6d9d4e3fe72082abeeb800360"
+            ],
+            "Cmd": [
+                "apache2-foreground"
+            ],
+            "Image": "ghcr.io/digininja/dvwa:latest",
+            "Volumes": null,
+            "WorkingDir": "/var/www/html",
+            "Entrypoint": [
+                "docker-php-entrypoint"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "e6e9b77ae8920e1ca703e055b3698dd01724c390d2079e299927740812182b11",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "db:service_started:false",
+                "com.docker.compose.image": "sha256:167b609f577e6d3161bbbfc1189f72549e9ce62cf32eb200050492c3dad3395c",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "cybr-dvwa",
+                "com.docker.compose.project.config_files": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\compose.yml",
+                "com.docker.compose.project.working_dir": "C:\\Users\\samas\\Documents\\CYBR-DVWA",
+                "com.docker.compose.service": "dvwa",
+                "com.docker.compose.version": "5.6.1",
+                "org.opencontainers.image.description": "DVWA pre-built image.",
+                "org.opencontainers.image.licenses": "gpl-3.0",
+                "org.opencontainers.image.source": "https://github.com/digininja/DVWA"
+            },
+            "StopSignal": "SIGWINCH"
+        },
+        "NetworkSettings": {
+            "SandboxID": "eca16d14907fd336791031d13db1e82d5ed8169ff048ee5b48f084b2220f849a",
+            "SandboxKey": "/var/run/docker/netns/eca16d14907f",
+            "Ports": {
+                "80/tcp": null
+            },
+            "Networks": {
+                "cybr-dvwa_dvwa": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "cybr-dvwa-dvwa-1",
+                        "dvwa"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "abedb7efb6e0855d12de1bcf4ee6661aafcc91682bbbdb3f1c86dd1babdbf4c2",
+                    "EndpointID": "5229359d5a3d72b429190259f4f960e5beaaa288c69034a484718c5310675923",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.3",
+                    "MacAddress": "36:e4:4f:43:29:b0",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "cybr-dvwa-dvwa-1",
+                        "dvwa",
+                        "9402fb1c5936"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:167b609f577e6d3161bbbfc1189f72549e9ce62cf32eb200050492c3dad3395c",
+            "size": 4089,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "c13eab7dada3617f8479a26b53790128dad3a9167476ba1b6df77e65664c0972",
+        "Created": "2026-11-16T18:18:16.248000545Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 3379,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-16T18:18:17.606339165Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+        "ResolvConfPath": "/var/lib/docker/containers/c13eab7dada3617f8479a26b53790128dad3a9167476ba1b6df77e65664c0972/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/c13eab7dada3617f8479a26b53790128dad3a9167476ba1b6df77e65664c0972/hostname",
+        "HostsPath": "/var/lib/docker/containers/c13eab7dada3617f8479a26b53790128dad3a9167476ba1b6df77e65664c0972/hosts",
+        "LogPath": "",
+        "Name": "/cybr-dvwa-proxy-1",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "C:\\Users\\samas\\Documents\\CYBR-DVWA\\certs\\server.crt:/etc/nginx/certs/server.crt:ro",
+                "C:\\Users\\samas\\Documents\\CYBR-DVWA\\certs\\server.key:/etc/nginx/certs/server.key:ro",
+                "C:\\Users\\samas\\Documents\\CYBR-DVWA\\proxy\\nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "local",
+                "Config": {}
+            },
+            "NetworkMode": "cybr-dvwa_dvwa",
+            "PortBindings": {
+                "443/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "443"
+                    }
+                ],
+                "80/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "80"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\certs\\server.crt",
+                "Destination": "/etc/nginx/certs/server.crt",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\certs\\server.key",
+                "Destination": "/etc/nginx/certs/server.key",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\proxy\\nginx.conf",
+                "Destination": "/etc/nginx/conf.d/default.conf",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "c13eab7dada3",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "443/tcp": {},
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.28.3",
+                "PKG_RELEASE=1",
+                "DYNPKG_RELEASE=1",
+                "NJS_VERSION=0.9.6",
+                "NJS_RELEASE=1",
+                "ACME_VERSION=0.3.1"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "docker.io/library/nginx:1.28-alpine",
+            "Volumes": null,
+            "WorkingDir": "/",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "928dc291c9661d5575f1930095c0b085af40470a59258a1c6076d7d792be2833",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "dvwa:service_started:false",
+                "com.docker.compose.image": "sha256:0dcc88822d45581e65ae329f8be769762bf628d3b2bb7d2a077d4aa5c98b30e3",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "cybr-dvwa",
+                "com.docker.compose.project.config_files": "C:\\Users\\samas\\Documents\\CYBR-DVWA\\compose.yml",
+                "com.docker.compose.project.working_dir": "C:\\Users\\samas\\Documents\\CYBR-DVWA",
+                "com.docker.compose.service": "proxy",
+                "com.docker.compose.version": "5.6.1",
+                "maintainer": "NGINX Docker Maintainers \u003cdocker-maint@nginx.com\u003e"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "NetworkSettings": {
+            "SandboxID": "7c30588ebf021eb02cdb4815d54e302ca626e06ee596112a544f2c7ab519dcba",
+            "SandboxKey": "/var/run/docker/netns/7c30588ebf02",
+            "Ports": {
+                "443/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "443"
+                    }
+                ],
+                "80/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "80"
+                    }
+                ]
+            },
+            "Networks": {
+                "cybr-dvwa_dvwa": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "cybr-dvwa-proxy-1",
+                        "proxy"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "abedb7efb6e0855d12de1bcf4ee6661aafcc91682bbbdb3f1c86dd1babdbf4c2",
+                    "EndpointID": "9d42c92be08c28a7cfd0f742368fcfd07fd29c4b09db7b08b5a2e4de7c076450",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.4",
+                    "MacAddress": "62:e8:3d:92:42:b9",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "cybr-dvwa-proxy-1",
+                        "proxy",
+                        "c13eab7dada3"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:0dcc88822d45581e65ae329f8be769762bf628d3b2bb7d2a077d4aa5c98b30e3",
+            "size": 2493,
+            "annotations": {
+                "com.docker.official-images.bashbrew.arch": "amd64",
+                "org.opencontainers.image.base.digest": "sha256:6ee8a60426eecd547e15e956742947935ccc66f39811c6ab161d98c6ba6ac148",
+                "org.opencontainers.image.base.name": "nginx:1.28.3-alpine-slim",
+                "org.opencontainers.image.created": "2026-03-24T23:11:09Z",
+                "org.opencontainers.image.revision": "30c9ebf5aba124ca7bd79f97dd7c825c113ed864",
+                "org.opencontainers.image.source": "https://github.com/nginx/docker-nginx.git#30c9ebf5aba124ca7bd79f97dd7c825c113ed864:stable/alpine",
+                "org.opencontainers.image.url": "https://hub.docker.com/_/nginx",
+                "org.opencontainers.image.version": "1.28.3-alpine"
+            },
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

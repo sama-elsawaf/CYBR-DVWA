@@ -1,0 +1,23 @@
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.28.3
+Date: Mon, 16 Nov 2026 18:53:49 GMT
+Content-Type: text/html
+Content-Length: 169
+Connection: keep-alive
+Location: https://127.0.0.1/
+
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 16 Nov 2026 18:53:54 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-Powered-By: PHP/8.5.11
+Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=df3bb1d46895c0472c1e67c74e5e9ae4; path=/; secure; HttpOnly; SameSite=Strict
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=4418253dc8fdb9e28f96a9d461091ee7; path=/; secure; HttpOnly; SameSite=Strict
+Location: login.php
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+

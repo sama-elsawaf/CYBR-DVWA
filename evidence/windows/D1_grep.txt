@@ -1,0 +1,86 @@
+README.ar.md:140:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.ar.md:150:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.ar.md:246:إذا كان يتطابق مع ما تتوقعه ، فإن الشيء التالي الذي يجب فعله هو التحقق من أنه يمكنك تسجيل الدخول كمستخدم في محرر الأوامر command line. بافتراض أن لديك مستخدم قاعدة بيانات لـ `dvwa` وكلمة مرور هي `p@ssw0rd`، قم بتنفيذ الأمر التالي:
+README.ar.md:249:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.ar.md:329:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.es.md:161:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.es.md:171:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.es.md:284:Si coincide con lo que se espera, lo siguiente es comprobar que se puede iniciar sesión como el usuario en cuestión a través de la línea de comandos. Asumiendo que tiene un usuario de base de datos `dvwa` y una contraseña `p@ssw0rd`, ejecute el siguiente comando:
+README.es.md:287:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.es.md:365:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.fa.md:287:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.fa.md:297:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.fa.md:512:اگر مقادیر به درستی در فایل کانفیگ تعریف شده بودند، مرحلهٔ بعدی تلاش برای ورود با نام کاریری از طریق خط فرمان است. با فرض بر اینکه شما یک نام کاربری با نام `dvwa` و یک کلمهٔ عبور با مقدار `p@ssw0rd` دارید، می‌توانید دستور زیر را اجرا کنید: 
+README.fa.md:515:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.fa.md:640:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.fr.md:158:$_DVWA[ 'db_password' ] = 'p@ssw0rd'; //Le mdp
+README.fr.md:168:mysql> create user dvwa@localhost identified by 'p@ssw0rd'; //On crée l'utilisateur
+README.fr.md:284:Si les informations semblent être correctes, la chose à revérifier est de regarder les journaux systèmes à propos de l'utilisateur en ligne de commande. Considérons que vous avez une BDD dénominée `dvwa` et un mot de passe `p@ssw0rd`, lancez la commande suivante.
+README.fr.md:356:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.id.md:229:$_DVWA['db_password'] = 'p@ssw0rd';
+README.id.md:238:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.id.md:413:Jika sesuai dengan harapan Anda, langkah berikutnya adalah memeriksa apakah Anda dapat masuk sebagai pengguna tersebut melalui baris perintah. Mengasumsikan Anda memiliki pengguna basis data `dvwa` dan kata sandi `p@ssw0rd`, jalankan perintah berikut:
+README.id.md:416:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.id.md:488:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.it.md:294:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.it.md:304:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.it.md:497:Se corrisponde a quanto ci si aspetta, la cosa successiva da fare è verificare se si riesce ad accedere come l’utente voluto da linea di comando. Supponendo di avere un utente del database chiamato `dvwa` e una password di `p@ssw0rd`, eseguire il seguente comando:
+README.it.md:500:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.it.md:622:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.ko.md:217:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.ko.md:227:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.ko.md:411:예상한 대로 맞는다면, 다음으로 할 일은 명령 줄에서 사용자로 로그인할 수 있는지 확인하는 것입니다. 데이터베이스 사용자가 `dvwa`이고 암호가 `p@ssw0rd`인 경우 다음 명령을 실행하세요.
+README.ko.md:414:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.ko.md:532:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.md:300:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.md:310:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.md:507:If it matches what you expect, the next thing to do is to check you can log in as the user on the command line. Assuming you have a database user of `dvwa` and a password of `p@ssw0rd`, run the following command:
+README.md:510:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.md:630:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.pl.md:232:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.pl.md:242:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.pl.md:420:Jeśli zgadza się z oczekiwaniami, następnym krokiem jest sprawdzenie, czy możesz zalogować się jako ten użytkownik z linii poleceń. Zakładając, że masz użytkownika bazy danych `dvwa` i hasło `p@ssw0rd`, wykonaj następujące polecenie:
+README.pl.md:423:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.pl.md:540:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.pt.md:164:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.pt.md:174:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.pt.md:286:Se corresponder ao que você espera, a próxima coisa a fazer é verificar se você pode fazer login como usuário no terminal. Supondo que você tenha um usuário de banco de dados chamado dvwa e uma senha de p@ssw0rd, execute o seguinte comando:
+README.pt.md:289:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.pt.md:365:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.ru.md:300:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.ru.md:310:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.ru.md:507:Если все соответствует вашим ожиданиям, следующим шагом будет проверка возможности входа в систему с помощью этого пользователя в командной строке. Предполагая, что у вас есть пользователь базы данных `dvwa` и пароль `p@ssw0rd`, выполните следующую команду:
+README.ru.md:510:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.ru.md:630:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.tr.md:140:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.tr.md:150:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.tr.md:246:Eğer eşleşiyorsa, komut satırından giriş yapıp yapamadığınıza bakın. Veri tabanı kullanıcınızın `dvwa` ve parolasının `p@ssw0rd` olduğunu varsayarsak, aşağıdaki komutu çalıştırın:
+README.tr.md:249:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.tr.md:330:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.uk.md:373:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.uk.md:386:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.uk.md:623:`p@ssw0rd`. Виконайте таку команду:
+README.uk.md:626:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.uk.md:758:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.vi.md:241:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.vi.md:251:MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
+README.vi.md:437:Nếu như bạn đã chắc chắn, việc tiếp theo cần làm là kiểm tra xem bạn có thể đăng nhập với tư cách người dùng trên command line hay không. Giả sử bạn có người dùng database là `dvwa` và mật khẩu là `p@ssw0rd`, hãy chạy lệnh sau:
+README.vi.md:440:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.vi.md:558:   mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+README.zh.md:163:$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+README.zh.md:173:mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+README.zh.md:271:如果文件确实存在，那么在命令行下检查一下， 比如用户名为： `dvwa` 密码为： `p@ssw0rd`, 那么执行以下命令:
+README.zh.md:274:mysql -u dvwa -pp@ssw0rd -D dvwa
+README.zh.md:351:    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+docs/MILESTONE2_SETUP.md:29:If you had the old stack running, the database volume still has the old password (`p@ssw0rd`), so recreate it once:
+part2/gcm_attack_tests.php:22:$old = "wachtwoord";
+part2/gcm_attack_tests.php:23:result("[1] old source key 'wachtwoord' rejected by sc_decrypt (key length check)", sc_decrypt($intercepted, $old) === false);
+part2/gcm_attack_tests.php:24:result("[1] key now loaded from env, not source: no 'wachtwoord' in low.php",
+part2/gcm_attack_tests.php:25:       strpos(file_get_contents(__DIR__ . '/../vulnerabilities/cryptography/source/low.php'), 'wachtwoord') === false);
+part2/xor_attack.py:17:SECRET_KEY = b"wachtwoord"  # hardcoded in low.php; the attacker does NOT know it in tests 2-4
+tests/test_secure_crypto.php:94:$data = random_bytes(1024); $xk = "wachtwoord"; $N = 20000;
+vulnerabilities/cryptography/help/help.php:60:xor (thisisaverylongstringtofindthepassword, base64decode (AwkKGx0EDhkXFg4NDAYTBBsdGwoQFQwOHRkLGxoBBwAQGwMYHQs=)) -> wachtwoordwachtwoordwachtwoordwachtwoo</code></pre>
+vulnerabilities/cryptography/help/help.php:63:It looks like we have found our key "wachtwoord". Let's give it a try on our challenge string:
+vulnerabilities/cryptography/help/help.php:66:<pre><code>xor (base64decode(Lg4WGlQZChhSFBYSEB8bBQtPGxdNQSwEHREOAQY=), wachtwoord) -> Your new password is: Olifant</code></pre>
+vulnerabilities/cryptography/help/help.php:73:		<p>Another lesson here, do not assume that the messages or the underlying system you are working with is in English. The key "wachtwoord" is Dutch for password.</p>
+vulnerabilities/cryptography/source/xor_theory.php:19:$key = "wachtwoord";
