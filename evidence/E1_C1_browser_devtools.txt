@@ -1,0 +1,28 @@
+### Browser evidence (headless Chromium 153.0.8010.12, lab CA imported into the NSS trust store, certificate errors NOT ignored)
+
+DevTools Security panel equivalent (Network.responseReceived.securityDetails) for https://localhost/login.php:
+  protocol=TLS 1.3  keyExchange=(TLS 1.3: in group)  keyExchangeGroup=X25519  cipher=AES_128_GCM
+  certificate subject=localhost  issuer=CYBR470 DVWA Lab CA  SAN=["localhost","dvwa.lab","127.0.0.1"]
+  validFrom=2026-11-16T16:46:38.000Z  validTo=2027-12-18T16:46:38.000Z  certificateTransparencyCompliance=unknown
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  main document HTTP status 200 (no certificate interstitial)
+
+[before login] Application > Cookies (Network.getAllCookies):
+  security   value=impossible.fLUikDyWODt8cCOl-MLVlPdX000-jinb1WqWqMsvJ-I  Secure=true  HttpOnly=true  SameSite=Strict  Session=true
+  PHPSESSID  value=adb8fb04aaba95d0a829793b1631988b  Secure=true  HttpOnly=true  SameSite=Strict  Session=true
+  document.cookie in the page = ""
+
+[after login] Application > Cookies (Network.getAllCookies):
+  security   value=impossible.fLUikDyWODt8cCOl-MLVlPdX000-jinb1WqWqMsvJ-I  Secure=true  HttpOnly=true  SameSite=Strict  Session=true
+  PHPSESSID  value=652aa6628585c816c0a97cbc33e56edb  Secure=true  HttpOnly=true  SameSite=Strict  Session=true
+  document.cookie in the page = ""
+
+PHPSESSID changed at login: true (adb8fb04aaba95d0a829793b1631988b -> 652aa6628585c816c0a97cbc33e56edb)
+
+[after choosing Low on security.php] Application > Cookies (Network.getAllCookies):
+  security   value=low.N2GinKlxLmAWPovcv5NO2Cs8dOAzol8MfOwjQK8B4Cg  Secure=true  HttpOnly=true  SameSite=Strict  Session=true
+  PHPSESSID  value=2765b39b19c5d968af226bc467c07082  Secure=true  HttpOnly=true  SameSite=Lax  Session=true
+  document.cookie in the page = ""
+
+A1 in the browser: Encode -> AS5XUdj9Rezfcq3nk0l3WRmC6CguO8deqkokFJnWh+2VrtJ5CbDW9kIRoY46RJB8Au/mIbjizPpkaw==
+  bit-flipped (Olifant->Hackers) and submitted to Decode -> page warning: "Message rejected: it failed the authentication check."

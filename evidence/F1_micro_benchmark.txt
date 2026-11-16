@@ -1,0 +1,18 @@
+### F1 micro-benchmark inside the dvwa container: $ docker compose exec dvwa php evidence/tools/f1_micro.php
+| operation (PHP 8.3.6, OpenSSL 3.0.13 30 Jan 2024) | n | mean us | p95 us |
+|---|---:|---:|---:|
+| XOR encode, key 'wachtwoord' + base64 (old low.php)        |   2000 |       2.54 |       3.04 |
+| AES-256-GCM sc_encrypt (random nonce, base64)              |   2000 |       3.30 |       2.66 |
+| AES-256-GCM sc_decrypt (tag check)                         |   2000 |       5.04 |       6.02 |
+| HKDF-SHA-256 derive one 32-byte key                        |   2000 |       4.42 |       4.98 |
+| md5(password) compare (old login)                          |   2000 |       0.38 |       0.39 |
+| Argon2id password_verify (m=19456 KiB, t=2, p=1)           |    200 |   23830.01 |   31682.13 |
+| Argon2id password_hash (new hash, same params)             |    200 |   23883.50 |   28586.36 |
+
+### Argon2id memory, measured as process peak RSS (VmHWM), separate php processes
+md5:      peak RSS before 22900 kB, after 23164 kB
+argon2id: peak RSS before 22708 kB, after 42328 kB (delta 19620 kB; memory_cost=19456 KiB)
+
+### CPU of the test host
+4
+model name	: Intel(R) Xeon(R) Processor @ 2.10GHz

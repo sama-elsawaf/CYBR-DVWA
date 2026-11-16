@@ -1,0 +1,23 @@
+## 1) GET /login.php (anonymous)   $ curl -i -c jar -b jar https://localhost/login.php
+HTTP/1.1 403 Forbidden
+
+PHPSESSID before login (from jar): 
+
+## 2) POST /login.php admin/password   $ curl -i -c jar -b jar -d 'username=admin&password=password&Login=Login&user_token=...'
+HTTP/1.1 403 Forbidden
+
+PHPSESSID after login (from jar):  
+=> session id did NOT change
+
+## 3) Old (pre-login) id is dead: request index.php with ONLY the old PHPSESSID
+HTTP/1.1 302 Found
+Location: login.php
+
+## 4) New id works: GET /index.php with the jar
+HTTP/1.1 403 Forbidden
+
+## 5) Cookie jar (curl marks HttpOnly cookies with the #HttpOnly_ prefix; column 4 TRUE = Secure)
+
+# FAILED RUN - test-script bug, not an app result: $CURL contained an unquoted '--noproxy *', the shell expanded
+# '*' to file names, so curl sent the request to the sandbox's outbound HTTPS proxy, which answered 403.
+# Fixed with 'set -f' (no globbing) in e1_cookies.sh; see E1_set_cookie_curl.txt for the rerun.

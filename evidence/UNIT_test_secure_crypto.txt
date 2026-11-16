@@ -1,0 +1,35 @@
+$ docker compose exec dvwa php tests/test_secure_crypto.php
+PASS  round trip (ASCII)
+PASS  round trip (unicode)
+PASS  round trip (empty message)
+PASS  same plaintext -> different ciphertext
+PASS  tamper: 1-bit flip at all 58 positions rejected (58)
+PASS  truncated message rejected
+PASS  garbage input rejected
+PASS  wrong key rejected
+PASS  AAD match accepted
+PASS  AAD mismatch rejected
+PASS  CRYPTO_KEY_FILE unset -> sc_load_key() false
+PASS  old CRYPTO_KEY_B64 env var is ignored (no env fallback)
+PASS  missing key file -> false
+PASS  empty key file -> false
+secure_crypto: CRYPTO_KEY_FILE is not set or not readable
+secure_crypto: CRYPTO_KEY_FILE is not set or not readable
+secure_crypto: CRYPTO_KEY_FILE is not set or not readable
+secure_crypto: master key file must contain base64 of exactly 32 bytes
+PASS  short (5-byte) key file -> false
+secure_crypto: master key file must contain base64 of exactly 32 bytes
+PASS  valid 32-byte master key accepted (trailing newline ok)
+PASS  sc_encrypt refuses a 5-byte key
+PASS  K_msg and K_cookie are 32 bytes
+PASS  K_msg != K_cookie != master
+PASS  K_msg = HKDF-SHA-256(master, info)
+PASS  message encrypted with K_cookie does not decrypt with K_msg
+PASS  HKDF known-answer (RFC 5869 TC1)
+PASS  100,000 nonces, duplicates = 0
+PASS  known-answer ciphertext matches published vector
+PASS  known-answer tag matches published vector
+INFO  1 KB x 20000: XOR (pure-PHP loop) = 568 ms | AES-256-GCM encrypt+decrypt (OpenSSL) = 63 ms
+
+25 passed, 0 failed
+[exit code: 0]

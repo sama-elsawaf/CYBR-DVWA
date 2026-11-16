@@ -1,0 +1,91 @@
+### C1 openssl s_client (OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024))
+
+$ openssl s_client -connect 127.0.0.1:443 -servername localhost -CAfile certs/lab-ca.crt -tls1_3 </dev/null
+depth=1 CN = CYBR470 DVWA Lab CA
+verify return:1
+depth=0 CN = localhost
+verify return:1
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:CN = localhost
+   i:CN = CYBR470 DVWA Lab CA
+   a:PKEY: id-ecPublicKey, 256 (bit); sigalg: ecdsa-with-SHA256
+   v:NotBefore: Nov 16 16:41:19 2026 GMT; NotAfter: Dec 18 16:41:19 2027 GMT
+---
+Server certificate
+subject=CN = localhost
+issuer=CN = CYBR470 DVWA Lab CA
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: ECDSA
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 844 bytes and written 323 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Server public key is 256 bit
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---
+DONE
+[exit 0]
+
+==================================================================
+$ openssl s_client -connect 127.0.0.1:443 -servername localhost -CAfile certs/lab-ca.crt -tls1_2 </dev/null
+40979330367F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:1599:SSL alert number 70
+CONNECTED(00000003)
+---
+no peer certificate available
+---
+No client certificate CA names sent
+---
+SSL handshake has read 7 bytes and written 206 bytes
+Verification: OK
+---
+New, (NONE), Cipher is (NONE)
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : 0000
+    Session-ID: 
+    Session-ID-ctx: 
+[exit code: 1]
+
+==================================================================
+## Each allowed TLS 1.3 suite, one at a time
+TLS_AES_256_GCM_SHA384           -> New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+TLS_AES_128_GCM_SHA256           -> New, TLSv1.3, Cipher is TLS_AES_128_GCM_SHA256
+TLS_CHACHA20_POLY1305_SHA256     -> New, TLSv1.3, Cipher is TLS_CHACHA20_POLY1305_SHA256
+TLS_AES_128_CCM_SHA256           -> 40A7E683407F0000:error:0A000410:SSL routines:ssl3_read_bytes:sslv3 alert handshake failure:../ssl/record/rec_layer_s3.c:1599:SSL alert number 40
+
+## Key-exchange group
+-groups X25519           -> Server Temp Key: X25519, 253 bits
+-groups P-256            -> 4067E2B65A7F0000:error:0A000410:SSL routines:ssl3_read_bytes:sslv3 alert handshake failure:../ssl/record/rec_layer_s3.c:1599:SSL alert number 40
+-groups X25519MLKEM768:P-256 -> 40672BCA8C7F0000:error:0A080106:SSL routines:gid_cb:passed invalid argument:../ssl/t1_lib.c:750:group 'X25519MLKEM768' cannot be set
+
+## TLS 1.1 / 1.0
+-tls1_1  -> 40C722AEF67F0000:error:0A0000BF:SSL routines:tls_setup_handshake:no protocols available:../ssl/statem/statem_lib.c:104:
+-tls1    -> 4087C95E4B7F0000:error:0A0000BF:SSL routines:tls_setup_handshake:no protocols available:../ssl/statem/statem_lib.c:104:
+
+## NOTE on the two blocks above:
+# - 'X25519MLKEM768 cannot be set' and TLS1.1/1.0 'no protocols available' are errors of THIS CLIENT (OpenSSL 3.0.13
+#   has no ML-KEM and disables TLS<1.2 at its default security level). They say nothing about the server.
+# Retry with the client forced to offer TLS 1.1 / 1.0 (SECLEVEL=0), so the SERVER has to answer:
+$ openssl s_client -connect 127.0.0.1:443 -servername localhost -CAfile certs/lab-ca.crt -tls1_1 -cipher 'DEFAULT@SECLEVEL=0'
+4057623AAB7F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:1599:SSL alert number 70
+New, (NONE), Cipher is (NONE)
+    Protocol  : TLSv1.1
+$ openssl s_client -connect 127.0.0.1:443 -servername localhost -CAfile certs/lab-ca.crt -tls1 -cipher 'DEFAULT@SECLEVEL=0'
+4077E894957F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:1599:SSL alert number 70
+New, (NONE), Cipher is (NONE)
+    Protocol  : TLSv1

@@ -1,0 +1,46 @@
+Valid cookies issued by security.php:
+  low        = low.tXFDp7HIEohEC22cVIIFuAOxSuE_eTxJjEQbrBE2zPQ
+  impossible = impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+  medium     = medium.e4rTupB895dKXsBpiwNUFIz72kI10ZmFtvNBw-4rBPQ
+
+PASS  valid signed low (control)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.tXFDp7HIEohEC22cVIIFuAOxSuE_eTxJjEQbrBE2zPQ' https://localhost/vulnerabilities/brute/
+      page shows Security Level: low (expected low); server Set-Cookie: (none)
+PASS  valid signed medium (control)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=medium.e4rTupB895dKXsBpiwNUFIz72kI10ZmFtvNBw-4rBPQ' https://localhost/vulnerabilities/brute/
+      page shows Security Level: medium (expected medium); server Set-Cookie: (none)
+PASS  plain 'low' (old DVWA format)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low' https://localhost/vulnerabilities/brute/
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  plain 'impossible'
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=impossible' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  plain 'medium'
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=medium' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  level changed, MAC kept: 'low.' + MAC(impossible)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  one MAC char changed
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.tXFDp7HIEohEC22cVIIFuAOxSuE_eTxJjEQbrBE2zPA' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  random MAC
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  empty MAC 'low.'
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+FAIL  unknown level 'admin.' + MAC
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=admin.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk' https://localhost/vulnerabilities/brute/
+      page shows Security Level: ? (expected impossible); server Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk
+
+SOME FAILED
+8
+[Mon Nov 16 16:45:32.659071 2026] [php:notice] [pid 12] [client 172.18.0.4:53946] dvwa: rejected security cookie with invalid HMAC
+[Mon Nov 16 16:45:32.671962 2026] [php:notice] [pid 13] [client 172.18.0.4:53958] dvwa: rejected security cookie with invalid HMAC
+
+# WHY 7 FAILED (test design, found after this run): every rejected cookie makes the server issue a new signed
+# cookie AND call session_regenerate_id(true), which deletes the old session. This test re-used the SAME old
+# PHPSESSID for every case, so from the 2nd tampered request on, the session no longer existed -> redirect to
+# login.php (no 'Security Level' on the page -> '?'). Every response still shows the server resetting the cookie
+# to 'impossible'. Rerun with a fresh login per case: E2_security_cookie_tamper.txt

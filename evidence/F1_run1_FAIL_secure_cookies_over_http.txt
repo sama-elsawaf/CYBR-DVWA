@@ -1,0 +1,1 @@
+# run 1 aborted: 'login failed on http://<dvwa container ip>' - the NEW app's cookies are Secure, so the client did not send them over plain http (expected). Fixed in the test client only (jar marks cookies non-secure for the direct-HTTP measurement).

@@ -1,0 +1,10 @@
+### C1 (honesty check) capture on the internal Docker bridge (br-cf47b7238524) - nginx proxy -> dvwa:80, same login
+# TLS ends at the proxy. The hop proxy->DVWA inside the private Docker network is plain HTTP.
+# It never leaves the host and is not reachable from outside (no published port), but it is NOT encrypted.
+
+172.18.0.4	172.18.0.3	GET	/login.php
+172.18.0.4	172.18.0.3	POST	/login.php
+172.18.0.4	172.18.0.3	GET	/index.php
+
+## POST body seen on the internal hop:
+username,password,Login,user_token	admin,password,Login,d5614a556b1750a6bf40272cb0ca10f2
