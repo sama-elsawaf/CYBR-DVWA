@@ -1,0 +1,24 @@
+Encode('Your new password is: Olifant') -> ATf/S0qEN21n6eCn+Han48wqlADygQh3Ziif4ZJO3gcSu651AphPfBUtd68tW/zmhyc/vB05TVdMAg==
+  length 58 bytes = 1 version + 12 nonce + 29 ciphertext + 16 tag
+
+DEFENDED    [1] XOR with the old source key 'wachtwoord' does not give the plaintext
+            XOR result (hex) = 01c680a45ee36f9df36c00074bf795e521b17576cccf166aec38137a5f
+DEFENDED    [1] the old XOR 'intercepted' message is rejected by Decode
+            server said: Message rejected: it failed the authentication check.
+DEFENDED    [2] keystream from two Encode('A'*30) requests differs (fresh nonce)
+            ks1 = e68f47e24cabaff1a3b3d0d2d5a0e094d2715c7983f83f492afb2f1a5c98
+            ks2 = ffabb65af16bae3db33f7f9f554048bb1c4eee74fe7d50ef49e5167f1157
+DEFENDED    [2] keystream has no repeating key (no period < 30)
+            period found: None
+DEFENDED    [2] recovered keystream does not decrypt the intercepted message
+            result = b'\x90(\xa4.f?\xaf\x03"\xbb\xa7\xb4\xfd?\x01\x06\x9c\xaf[k8VJK\xb2\xb4S\x0fq'
+DEFENDED    [3] c1 XOR c2 != p1 XOR p2
+            c1^c2 = 58fcf0793dffc4a3955efb85de76ca91cf7ad75200e0cae0c0ade8
+            p1^p2 = 1d0416075702174441124f0648114809490e13035210535b54110b
+DEFENDED    [4] bit-flipped ciphertext (Olifant->Hackers) rejected by Decode
+            submitted ATf/S0qEN21n6eCn+Han48wqlADygQh3Ziif4ZJO3gcSu65yD5JCeAkqd68tW/zmhyc/vB05TVdMAg==
+            server said: Message rejected: it failed the authentication check.; plaintext returned: None
+DEFENDED    [4] control: the untouched ciphertext still decodes
+            Decode -> 'Your new password is: Olifant'
+
+ALL ATTACKS DEFENDED

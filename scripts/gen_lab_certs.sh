@@ -5,6 +5,11 @@
 set -eu
 cd "$(dirname "$0")/.."
 mkdir -p certs && cd certs
+# Empty folders named like the cert files appear if `docker compose up` ran first (Docker Desktop
+# creates missing bind-mount sources as folders). Remove those so the files can be written.
+for f in server.crt server.key lab-ca.crt lab-ca.key; do
+  [ -d "$f" ] && rmdir "$f" && echo "removed empty folder certs/$f (created by Docker)"
+done
 umask 077
 if [ ! -s lab-ca.key ]; then
   openssl ecparam -name prime256v1 -genkey -noout -out lab-ca.key

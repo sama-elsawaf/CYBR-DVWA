@@ -1,0 +1,94 @@
+Connecting to 127.0.0.1
+depth=1 CN=CYBR470 DVWA Lab CA
+verify return:1
+depth=0 CN=localhost
+verify return:1
+CONNECTED(000001A0)
+---
+Certificate chain
+ 0 s:CN=localhost
+   i:CN=CYBR470 DVWA Lab CA
+   a:PKEY: EC, (prime256v1); sigalg: ecdsa-with-SHA256
+   v:NotBefore: Nov 16 18:18:09 2026 GMT; NotAfter: Dec 18 18:18:09 2027 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIB0TCCAXegAwIBAgIUfSJ5Vs0G2Q6uSdqtroh4HuN7zZYwCgYIKoZIzj0EAwIw
+HjEcMBoGA1UEAwwTQ1lCUjQ3MCBEVldBIExhYiBDQTAeFw0yNjExMTYxODE4MDla
+Fw0yNzEyMTgxODE4MDlaMBQxEjAQBgNVBAMMCWxvY2FsaG9zdDBZMBMGByqGSM49
+AgEGCCqGSM49AwEHA0IABOAWlNnGw5R/Y6LP06fX5NQOYgL4q3rezgU50caDB/IC
+dScVQba8/C6J5xS0bti9GBE0AUERCiiCSaiFkSK4meCjgZwwgZkwDAYDVR0TAQH/
+BAIwADAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAwwCgYIKwYBBQUHAwEwJAYDVR0R
+BB0wG4IJbG9jYWxob3N0gghkdndhLmxhYocEfwAAATAdBgNVHQ4EFgQUEIBQnKps
+n2+M4nuzYytlcNnbdQMwHwYDVR0jBBgwFoAU27FLmcoH1tPpkdltYAUkqw+9ebAw
+CgYIKoZIzj0EAwIDSAAwRQIgEybC/d4oAQlZR1RSdFt8HFz7SCpd35fq15vThiWB
+3nACIQC4fJoOdt/seLmAPLDhT7GzCoEZthrc9oVdoEEVabDvoA==
+-----END CERTIFICATE-----
+subject=CN=localhost
+issuer=CN=CYBR470 DVWA Lab CA
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: ecdsa_secp256r1_sha256
+Peer Temp Key: X25519, 253 bits
+---
+SSL handshake has read 845 bytes and written 1556 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Protocol: TLSv1.3
+Server public key is 256 bit
+This TLS version forbids renegotiation.
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---
+DONE
+---
+Post-Handshake New Session Ticket arrived:
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_256_GCM_SHA384
+    Session-ID: 5C2FA2D6F37DB04E84EDAB91D4FEFCFDA98CC9F22ECE7C348C970F8252351778
+    Session-ID-ctx: 
+    Resumption PSK: C64D920FFEF46DA3D7CFCE86D27BE0BB6C256194B6612ED77330BEB2528C6AE69F1A2684DB7BC67C9080870DEF78D2C7
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - 29 a0 f8 9e 1c 38 96 02-8c fa 74 51 3a 77 ed ad   )....8....tQ:w..
+    0010 - b9 e8 b2 76 ca 37 7f 12-a3 85 85 e9 ad 47 26 88   ...v.7.......G&.
+
+    Start Time: 1794855196
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+    Extended master secret: no
+    Max Early Data: 0
+---
+read R BLOCK
+---
+Post-Handshake New Session Ticket arrived:
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_256_GCM_SHA384
+    Session-ID: A48A8F7BF86AC1D8DED7558F54EF2E471E63B807A69B2A39FA23D396611FF18B
+    Session-ID-ctx: 
+    Resumption PSK: F33B1BA35261D2869A852478195294744A922EDAEF5AEC8855B5C4890DB34569E56A175934424C0AF7C41EC69F3AF1A9
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - da 16 59 a1 21 ba 37 f3-f2 52 98 3c 3b 16 b9 66   ..Y.!.7..R.<;..f
+    0010 - 63 85 a7 ca 4f fc e2 d0-a6 0d a5 d7 06 ec 27 f8   c...O.........'.
+
+    Start Time: 1794855196
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+    Extended master secret: no
+    Max Early Data: 0
+---
+read R BLOCK

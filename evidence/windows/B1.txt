@@ -1,0 +1,48 @@
+== 1. Column type
+Field	Type	Null	Key	Default	Extra
+password	varchar(255)	YES		NULL	
+
+== 2. Reset DB through setup.php (new seeding)
+setup.php reset: OK
+user	password
+admin	$argon2id$v=19$m=19456,t=2,p=1$aGRwLmF3TE9mR214NEtHbA$YvPVR+c7XsQD0aXI9MiEFo1vffOn80b89mFNRE2MAW8
+gordonb	$argon2id$v=19$m=19456,t=2,p=1$cXV6RjJYQjd3OVc3Qjkyeg$2thfwfG+Ue635phoGSC1NUEfSwDtEQV2Y6PjaTeecj0
+1337	$argon2id$v=19$m=19456,t=2,p=1$M1A2dGg2VlkvdkZRTFlwSw$6LpKhqZIc8P2PXt7xduy9q3HKsEO5a07c3+feBuLFBc
+pablo	$argon2id$v=19$m=19456,t=2,p=1$dGp6R3R2YkZQRUdjZnZkNA$O14KMgnAlBZSb+ihRfwlEtriUanJklSDl1yRfd3RGzU
+smithy	$argon2id$v=19$m=19456,t=2,p=1$RHJ6RDdmQkFCamRRei9Sdg$ylJdMj3LoqCII02dviAqb6CpewiKQUPWBiH0cL2fCt8
+
+== 3. Simulate a LEGACY database (rows as the original DVWA stored them: unsalted MD5)
+user	password
+admin	5f4dcc3b5aa765d61d8327deb882cf99
+gordonb	e99a18c428cb38d5f260853678922e03
+1337	8d3533d75ae2c3966d7e0d4fcc69216b
+pablo	0d107d09f5bbe40cade3de5c71e9e9b7
+smithy	5f4dcc3b5aa765d61d8327deb882cf99
+
+== 4. Log in once as every legacy user (default DVWA passwords)
+  login admin    via https://127.0.0.1/login.php -> OK
+  login gordonb  via https://127.0.0.1/login.php -> OK
+  login 1337     via https://127.0.0.1/login.php -> OK
+  login pablo    via https://127.0.0.1/login.php -> OK
+  login smithy   via https://127.0.0.1/login.php -> OK
+
+== 5. After login: SELECT user, password FROM users;
+user	password
+admin	$argon2id$v=19$m=19456,t=2,p=1$Nm50eXFzQVFPQ0kvVmQwYg$+n2Ub9bdwE16zKfPOmraR1AdS2D8hM9bIzDBuMUrXOQ
+gordonb	$argon2id$v=19$m=19456,t=2,p=1$WVYza1ExUWN1a3RVUGRzRg$MDYmlTIDvWe1oytGV8/Yjl0ajdbIKHZ5TRD9XQJItmo
+1337	$argon2id$v=19$m=19456,t=2,p=1$NUlGN08uYW8wZGRLS2FPSw$zOg3a6UCaJxYduiKaCLUdDcp16/Tdym+YLZmIR6EVpM
+pablo	$argon2id$v=19$m=19456,t=2,p=1$WUt0SzQwS2RibHNFaDIxcg$33154rr6nZlZWNH5JNCRuRe9jrFw7aN0upCkakrRbt0
+smithy	$argon2id$v=19$m=19456,t=2,p=1$akFZa01ra1RJQXJ2QS9LZw$yCmeBGsh53MPWVehZniIXIYIxGogqrbGsDea0pEHAD8
+
+== 6. Checks
+argon2id_rows	total_rows	max_len
+5	5	97
+admin_equals_smithy_same_plaintext
+0
+
+== 7. Second login still works (now verified against Argon2id)
+  login admin    via https://127.0.0.1/login.php -> OK
+  login gordonb  via https://127.0.0.1/login.php -> OK
+  login 1337     via https://127.0.0.1/login.php -> OK
+  login pablo    via https://127.0.0.1/login.php -> OK
+  login smithy   via https://127.0.0.1/login.php -> OK
