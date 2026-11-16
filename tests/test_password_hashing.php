@@ -3,7 +3,7 @@
  * Preliminary tests for password_hashing.php  -  run:  php test_password_hashing.php
  * Uses an in-memory SQLite table that copies DVWA's seeded MD5 users, so it does not touch your Docker DB.
  */
-require __DIR__ . '/password_hashing.php';
+require __DIR__ . '/../dvwa/includes/password_hashing.php';   // the deployed helper, not a copy
 
 $pass = 0; $fail = 0;
 function check(string $name, bool $ok): void {
@@ -51,6 +51,14 @@ $a = $db->query("SELECT password FROM users WHERE user='admin'")->fetchColumn();
 $s = $db->query("SELECT password FROM users WHERE user='smithy'")->fetchColumn();
 check("AFTER: admin and smithy (same password) now have different hashes (salted)", $a !== $s);
 check("hash length fits in VARCHAR(255) (was VARCHAR(32)): " . strlen($a), strlen($a) <= 255 && strlen($a) > 32);
+
+// ph_check(): the pure function used by the Brute Force lab
+check("ph_check: correct password vs Argon2id", ph_check('abc123', ph_hash('abc123')));
+check("ph_check: wrong password vs Argon2id", !ph_check('abc124', ph_hash('abc123')));
+check("ph_check: legacy MD5 row still verifies", ph_check('letmein', md5('letmein')));
+check("ph_check: unknown hash format rejected", !ph_check('x', 'plaintext-or-garbage'));
+$h = ph_hash('x');
+check("Argon2id parameters stored in hash (m=19456,t=2,p=1): " . substr($h, 0, 31), str_starts_with($h, '$argon2id$v=19$m=19456,t=2,p=1$'));
 
 echo "\n$pass passed, $fail failed\n";
 exit($fail === 0 ? 0 : 1);

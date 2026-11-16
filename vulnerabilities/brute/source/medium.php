@@ -7,16 +7,14 @@ if( isset( $_GET[ 'Login' ] ) ) {
 
 	// Sanitise password input
 	$pass = $_GET[ 'password' ];
-	$pass = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
-	$pass = md5( $pass );
+	// R2: password verified with Argon2id in PHP (was: unsalted MD5 compared inside SQL)
 
 	// Check the database
-	$query  = "SELECT * FROM `users` WHERE user = '$user' AND password = '$pass';";
+	$query  = "SELECT * FROM `users` WHERE user = '$user';";
 	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
 
-	if( $result && mysqli_num_rows( $result ) == 1 ) {
+	if( $result && mysqli_num_rows( $result ) == 1 && ph_check( $pass, ( $row = mysqli_fetch_assoc( $result ) )[ 'password' ] ) ) {
 		// Get users details
-		$row    = mysqli_fetch_assoc( $result );
 		$avatar = $row["avatar"];
 
 		// Login successful

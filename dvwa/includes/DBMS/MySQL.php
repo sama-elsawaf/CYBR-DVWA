@@ -52,11 +52,11 @@ $base_dir= str_replace ("setup.php", "", $_SERVER['SCRIPT_NAME']);
 $avatarUrl  = $base_dir . 'hackable/users/';
 
 $insert = "INSERT INTO users (user_id, first_name, last_name, user, password, avatar, last_login, failed_login) VALUES
-	('1','admin','admin','admin',MD5('password'),'{$avatarUrl}admin.jpg', NOW(), '0'),
-	('2','Gordon','Brown','gordonb',MD5('abc123'),'{$avatarUrl}gordonb.jpg', NOW(), '0'),
-	('3','Hack','Me','1337',MD5('charley'),'{$avatarUrl}1337.jpg', NOW(), '0'),
-	('4','Pablo','Picasso','pablo',MD5('letmein'),'{$avatarUrl}pablo.jpg', NOW(), '0'),
-	('5','Bob','Smith','smithy',MD5('password'),'{$avatarUrl}smithy.jpg', NOW(), '0');";
+	('1','admin','admin','admin','" . ph_hash('password') . "','{$avatarUrl}admin.jpg', NOW(), '0'),
+	('2','Gordon','Brown','gordonb','" . ph_hash('abc123') . "','{$avatarUrl}gordonb.jpg', NOW(), '0'),
+	('3','Hack','Me','1337','" . ph_hash('charley') . "','{$avatarUrl}1337.jpg', NOW(), '0'),
+	('4','Pablo','Picasso','pablo','" . ph_hash('letmein') . "','{$avatarUrl}pablo.jpg', NOW(), '0'),
+	('5','Bob','Smith','smithy','" . ph_hash('password') . "','{$avatarUrl}smithy.jpg', NOW(), '0');";
 if( !mysqli_query($GLOBALS["___mysqli_ston"],  $insert ) ) {
 	dvwaMessagePush( "Data could not be inserted into 'users' table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
 	dvwaPageReload();

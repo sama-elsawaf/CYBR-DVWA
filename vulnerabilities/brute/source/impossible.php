@@ -11,9 +11,7 @@ if( isset( $_POST[ 'Login' ] ) && isset ($_POST['username']) && isset ($_POST['p
 
 	// Sanitise password input
 	$pass = $_POST[ 'password' ];
-	$pass = stripslashes( $pass );
-	$pass = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
-	$pass = md5( $pass );
+	// R2: verified with Argon2id below (was: unsalted MD5 compared inside SQL)
 
 	// Default values
 	$total_failed_login = 3;
@@ -50,14 +48,13 @@ if( isset( $_POST[ 'Login' ] ) && isset ($_POST['username']) && isset ($_POST['p
 	}
 
 	// Check the database (if username matches the password)
-	$data = $db->prepare( 'SELECT * FROM users WHERE user = (:user) AND password = (:password) LIMIT 1;' );
+	$data = $db->prepare( 'SELECT * FROM users WHERE user = (:user) LIMIT 1;' );
 	$data->bindParam( ':user', $user, PDO::PARAM_STR);
-	$data->bindParam( ':password', $pass, PDO::PARAM_STR );
 	$data->execute();
 	$row = $data->fetch();
 
-	// If its a valid login...
-	if( ( $data->rowCount() == 1 ) && ( $account_locked == false ) ) {
+	// If its a valid login... (R2: Argon2id check, constant time)
+	if( ( $data->rowCount() == 1 ) && ph_check( $pass, $row[ 'password' ] ) && ( $account_locked == false ) ) {
 		// Get users details
 		$avatar       = $row[ 'avatar' ];
 		$failed_login = $row[ 'failed_login' ];

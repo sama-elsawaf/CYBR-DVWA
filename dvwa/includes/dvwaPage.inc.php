@@ -20,6 +20,8 @@ if( !isset( $html ) ) {
 // R9 / F4: the `security` cookie is signed with HMAC-SHA-256 (key K_cookie, derived with HKDF from
 // the master secret in secure_crypto.php). A missing, unsigned or hand-edited cookie is ignored.
 require_once DVWA_WEB_PAGE_TO_ROOT . 'vulnerabilities/cryptography/source/secure_crypto.php';
+// R2: Argon2id helpers (ph_hash, ph_verify_and_upgrade) available to every page and lab.
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/password_hashing.php';
 
 // Valid security levels
 $security_levels = array('low', 'medium', 'high', 'impossible');

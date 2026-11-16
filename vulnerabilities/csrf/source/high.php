@@ -35,8 +35,7 @@ if ($change) {
 	// Do the passwords match?
 	if( $pass_new == $pass_conf ) {
 		// They do!
-		$pass_new = mysqli_real_escape_string ($GLOBALS["___mysqli_ston"], $pass_new);
-		$pass_new = md5( $pass_new );
+		$pass_new = ph_hash( $pass_new );   // R2: salted Argon2id instead of unsalted MD5 (hash is SQL-safe)
 
 		// Update the database
 		$current_user = dvwaCurrentUser();
