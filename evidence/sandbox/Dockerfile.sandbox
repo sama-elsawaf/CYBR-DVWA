@@ -1,0 +1,14 @@
+# SANDBOX-ONLY image used to run the evidence in the Claude cloud container.
+# Reason: that host can only reach archive.ubuntu.com for packages (deb.debian.org, ghcr.io blobs
+# are blocked), so the repo Dockerfile (php:8-apache + apt from Debian) cannot build there.
+# It mirrors the repo image: Apache + mod_php + mysqli + gd, docroot /var/www/html, port 80.
+FROM docker.io/library/ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends apache2 libapache2-mod-php8.3 php8.3-mysql php8.3-gd php8.3-cli php8.3-sqlite3 ca-certificates iputils-ping \
+ && apt-get clean && rm -rf /var/lib/apt/lists/* \
+ && a2enmod rewrite \
+ && rm -f /var/www/html/index.html
+WORKDIR /var/www/html
+EXPOSE 80
+CMD ["apache2ctl", "-D", "FOREGROUND"]

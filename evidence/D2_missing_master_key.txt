@@ -1,0 +1,80 @@
+### D2: master-key secret missing / empty / wrong length
+
+## Case 1: secret file REMOVED
+$ rm secrets/crypto_master_key.txt && docker compose up -d --force-recreate dvwa
+ Container cybr-dvwa-db-1 Running 
+ Container cybr-dvwa-dvwa-1 Recreate 
+time="2026-11-16T16:48:16Z" level=warning msg="secret file cybr-dvwa_crypto_master_key does not exist"
+ Container cybr-dvwa-dvwa-1 Error response from daemon: invalid mount config for type "bind": bind source path does not exist: /home/user/CYBR-DVWA/secrets/crypto_master_key.txt 
+Error response from daemon: invalid mount config for type "bind": bind source path does not exist: /home/user/CYBR-DVWA/secrets/crypto_master_key.txt
+[exit code: 1]
+db: Up About a minute
+dvwa: Up About a minute
+proxy: Up About a minute
+
+## Case 2: secret file EMPTY
+$ : > secrets/crypto_master_key.txt && docker compose up -d --force-recreate dvwa
+ Container cybr-dvwa-dvwa-1 Starting 
+ Container cybr-dvwa-dvwa-1 Started 
+[exit code: 0]
+  login admin/password: OK
+  security level after choosing 'low': ['impossible']
+  Cryptography Encode('hello') -> result=None, warning=None
+  Cryptography Decode(...)     -> result=None, warning=None
+  server log (dvwa container):
+      8 dvwa: rejected security cookie with invalid HMAC
+     53 secure_crypto: master key file must contain base64 of exactly 32 bytes
+  unit-level check inside the container:
+    bool(false)
+    bool(false)
+    secure_crypto: master key file must contain base64 of exactly 32 bytes
+    secure_crypto: master key file must contain base64 of exactly 32 bytes
+
+## Case 3: secret file holds base64 of only 16 bytes
+$ php -r 'echo base64_encode(random_bytes(16));' > secrets/crypto_master_key.txt && docker compose up -d --force-recreate dvwa
+ Container cybr-dvwa-dvwa-1 Started 
+  login admin/password: OK
+  security level after choosing 'low': ['impossible']
+  Cryptography Encode('hello') -> result=None, warning=None
+  Cryptography Decode(...)     -> result=None, warning=None
+    bool(false)
+    secure_crypto: master key file must contain base64 of exactly 32 bytes
+
+## Restore the real key
+ Container cybr-dvwa-dvwa-1 Started 
+  setup.php reset: OK
+  login admin/password: OK (final URL https://localhost/index.php)
+  crypto encode (low): 'AVE0cndSanxxvqvPZrW5TU6W1WnZ7dmcWjUBBmpllJRvwGUiC/HJSO28xsyeKg==' warn=None HTTP 200
+  crypto decode (low): 'hello milestone 2' warn=None
+  SMOKE PASS
+
+=================== additional runs ===================
+# Case 1 above: 'up --force-recreate' failed (exit 1) and Compose left the PREVIOUS dvwa container (old key) running.
+# Case 1b: clean start with the file missing:
+$ docker compose down && rm secrets/crypto_master_key.txt && docker compose up -d
+ Network cybr-dvwa_dvwa Removed 
+ service:dvwa:1 Error response from daemon: invalid mount config for type "bind": bind source path does not exist: /home/user/CYBR-DVWA/secrets/crypto_master_key.txt 
+ Container cybr-dvwa-proxy-1 Creating 
+Error response from daemon: invalid mount config for type "bind": bind source path does not exist: /home/user/CYBR-DVWA/secrets/crypto_master_key.txt
+[exit code: 1]
+$ docker compose ps -a
+db: created Created
+$ curl -s -o /dev/null -w '%{http_code}' https://localhost/login.php
+000
+
+# Case 2b: EMPTY key file, POST to the Low Cryptography source directly (the web UI cannot reach Low
+# without K_cookie, because the security cookie cannot be signed and the level stays 'impossible')
+ Container cybr-dvwa-proxy-1 Started 
+secure_crypto: master key file must contain base64 of exactly 32 bytes
+low.php Encode(hello): encoded=NULL | warning shown to user: The encryption service is not available. Please contact the administrator.
+
+# Control: same harness with the real key restored
+ Container cybr-dvwa-proxy-1 Started 
+low.php Encode(hello): encoded='AWdga6F5zyen9gQfoBFjhm5D2dMZdTyOrokpf9oTiX+C+g==' | warning shown to user: (none)
+
+## Restored: smoke test
+  setup.php reset: OK
+  login admin/password: OK (final URL https://localhost/index.php)
+  crypto encode (low): 'AVBzQH+uciqXl5o21jz9JtwAP5q9xg7c4+5pfkz/w+USny2EKQZTPOAuqjcYvA==' warn=None HTTP 200
+  crypto decode (low): 'hello milestone 2' warn=None
+  SMOKE PASS

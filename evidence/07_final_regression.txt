@@ -1,0 +1,23 @@
+### Final regression on the final commit state (2026-11-16T16:53:09Z)
+db: Up 3 minutes 3306/tcp
+dvwa: Up 3 minutes 80/tcp
+proxy: Up 3 minutes 127.0.0.1:80->80/tcp, 127.0.0.1:443->443/tcp
+
+$ docker compose exec dvwa php tests/test_secure_crypto.php | tail -1
+25 passed, 0 failed
+
+$ docker compose exec dvwa php tests/test_password_hashing.php | tail -1
+14 passed, 0 failed
+
+$ docker compose exec dvwa php part2/gcm_attack_tests.php | tail -1
+6 attacks defended, 0 succeeded
+
+ALL PASS
+ALL ATTACKS DEFENDED
+ALL PASS
+SMOKE PASS
+
+HTTP/1.1 301 Moved Permanently
+Location: https://127.0.0.1/
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=31536000; includeSubDomains

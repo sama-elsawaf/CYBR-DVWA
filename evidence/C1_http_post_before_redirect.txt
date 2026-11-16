@@ -1,0 +1,12 @@
+### C1/C2 limitation check: a client that POSTs the login form to http:// (port 80) directly
+$ curl -d 'username=admin&password=password&Login=Login' http://127.0.0.1/login.php
+301 -> https://127.0.0.1/login.php
+
+## what tshark on lo saw (port 80):
+    4 0.000096423    127.0.0.1 → 127.0.0.1    HTTP 261 POST /login.php HTTP/1.1  (application/x-www-form-urlencoded)
+    6 0.000897527    127.0.0.1 → 127.0.0.1    HTTP 437 HTTP/1.1 301 Moved Permanently  (text/html)
+username,password,Login	admin,password,Login
+
+# => The redirect cannot protect a request that was already sent in cleartext. DVWA's own login form posts to a
+#    relative URL, so this only happens if the user starts on http://. HSTS (max-age 1 year) makes the browser
+#    upgrade to https BEFORE sending, after the first HTTPS visit to that HOSTNAME (browsers ignore HSTS for bare IPs).

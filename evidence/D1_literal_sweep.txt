@@ -1,0 +1,112 @@
+### D1 sweep for old secret literals: wachtwoord, p@ssw0rd, and 'dvwa' used as a password
+# repo = tracked files of branch milestone2-impl (git grep), excluding evidence/ (it quotes these strings)
+
+## git grep -n -F 'wachtwoord'  (files: count)
+part2/gcm_attack_tests.php:4
+part2/xor_attack.py:1
+tests/test_secure_crypto.php:1
+vulnerabilities/cryptography/help/help.php:4
+vulnerabilities/cryptography/source/xor_theory.php:1
+
+## git grep -n -F 'p@ssw0rd'  (files: count)
+README.ar.md:5
+README.es.md:5
+README.fa.md:5
+README.fr.md:4
+README.id.md:5
+README.it.md:5
+README.ko.md:5
+README.md:5
+README.pl.md:5
+README.pt.md:5
+README.ru.md:5
+README.tr.md:5
+README.uk.md:5
+README.vi.md:5
+README.zh.md:5
+docs/MILESTONE2_SETUP.md:1
+
+## 'dvwa' as a password: git grep -n -i -E "(pass(word)?|PWD)[^=:]{0,20}[=:][ '\"]*dvwa['\" ]*($|[;,)])|identified by 'dvwa'|-pdvwa" -- . ':!evidence'
+(no hits)
+
+## same three patterns in the files that configure the running app
+(no hits)
+
+## docker compose config (resolved, as Compose sends it to the engine)
+7:      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+8:      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+13:    secrets:
+14:      - source: db_root_password
+15:        target: /run/secrets/db_root_password
+16:      - source: db_password
+17:        target: /run/secrets/db_password
+26:      CRYPTO_KEY_FILE: /run/secrets/crypto_master_key
+27:      DB_PASSWORD_FILE: /run/secrets/db_password
+34:    secrets:
+35:      - source: crypto_master_key
+36:        target: /run/secrets/crypto_master_key
+37:      - source: db_password
+38:        target: /run/secrets/db_password
+50:        target: /var/www/html/secrets
+84:        source: /home/user/CYBR-DVWA/certs/server.key
+85:        target: /etc/nginx/certs/server.key
+109:secrets:
+110:  crypto_master_key:
+111:    name: cybr-dvwa_crypto_master_key
+112:    file: /home/user/CYBR-DVWA/secrets/crypto_master_key.txt
+113:  db_password:
+114:    name: cybr-dvwa_db_password
+115:    file: /home/user/CYBR-DVWA/secrets/db_password.txt
+116:  db_root_password:
+117:    name: cybr-dvwa_db_root_password
+118:    file: /home/user/CYBR-DVWA/secrets/db_root_password.txt
+
+## docker inspect: Config.Env of every running container
+-- /cybr-dvwa-db-1
+MARIADB_PASSWORD_FILE=/run/secrets/db_password
+MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+MARIADB_DATABASE=dvwa
+MARIADB_USER=dvwa
+GOSU_VERSION=1.19
+LANG=C.UTF-8
+MARIADB_VERSION=1:10.11.19+maria~ubu2204
+-- /cybr-dvwa-dvwa-1
+CRYPTO_KEY_FILE=/run/secrets/crypto_master_key
+DB_PASSWORD_FILE=/run/secrets/db_password
+FORCE_SECURE_COOKIES=1
+DB_SERVER=db
+DEBIAN_FRONTEND=noninteractive
+-- /cybr-dvwa-proxy-1
+NGINX_VERSION=1.28.3
+PKG_RELEASE=1
+DYNPKG_RELEASE=1
+NJS_VERSION=0.9.6
+NJS_RELEASE=1
+ACME_VERSION=0.3.1
+
+## docker inspect / history / compose config: grep for the literals AND for the current secret VALUES (values not printed)
+cfg.yml                                            wachtwoord=0 p@ssw0rd=0 PASSWORD=dvwa=0 master_key_value=0 db_pw_value=0 root_pw_value=0
+inspect.json                                       wachtwoord=0 p@ssw0rd=0 PASSWORD=dvwa=0 master_key_value=0 db_pw_value=0 root_pw_value=0
+h_docker.io_library_mariadb_10.txt                 wachtwoord=0 p@ssw0rd=0 PASSWORD=dvwa=0 master_key_value=0 db_pw_value=0 root_pw_value=0
+h_docker.io_library_nginx_1.28-alpine.txt          wachtwoord=0 p@ssw0rd=0 PASSWORD=dvwa=0 master_key_value=0 db_pw_value=0 root_pw_value=0
+h_dvwa-sandbox_latest.txt                          wachtwoord=0 p@ssw0rd=0 PASSWORD=dvwa=0 master_key_value=0 db_pw_value=0 root_pw_value=0
+
+## Classification of every remaining hit
+# wachtwoord
+#   vulnerabilities/cryptography/help/help.php (4)        TEACHING: the help page's walkthrough of breaking the old XOR lab
+#   vulnerabilities/cryptography/source/xor_theory.php (1) TEACHING: stand-alone XOR demo script ("hello world..."), protects nothing
+#   part2/xor_attack.py (1)                                TEST: BEFORE-attack against the old XOR cipher
+#   part2/gcm_attack_tests.php (4)                          TEST: checks the old key no longer works / is not in low.php
+#   tests/test_secure_crypto.php (1)                        TEST: XOR performance baseline key
+#   -> no real key use. low.php (the live lab) no longer contains it.
+# p@ssw0rd
+#   README*.md (15 translations, 4-5 each)                  DOCS (upstream): manual non-Docker install instructions
+#   docs/MILESTONE2_SETUP.md (1)                            DOCS: tells the user the OLD volume still has the old password
+#   -> no config hit: compose.yml, config.inc.php.dist, Dockerfile have none (section above).
+# 'dvwa' as a password: no hits in the repo. MARIADB_DATABASE=dvwa / MARIADB_USER=dvwa are the DB and user NAMES.
+# Git history: older commits still contain MYSQL_PASSWORD=p@ssw0rd / MYSQL_ROOT_PASSWORD=dvwa in compose.yml.
+#   Those are the public upstream DVWA defaults and are no longer used anywhere (DB recreated with random secrets);
+#   no real CRYPTO_KEY_B64 value was ever committed (.env was gitignored; only the placeholder in .env.example).
+# Image layers / inspect / compose config: 0 hits for the literals and 0 hits for the CURRENT secret values.
+# REAL LEAK FOUND AND FIXED during D1: web-root + build-context exposure of ./secrets and ./certs
+#   (D1_webroot_leak_before_fix.txt / _after_fix.txt, D1_build_context_before_fix.txt / _after_fix.txt).

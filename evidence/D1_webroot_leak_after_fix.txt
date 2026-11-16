@@ -1,0 +1,29 @@
+### D1 web-root leak check AFTER fix (tmpfs over secrets/ and certs/ in the dvwa container + nginx deny rule)
+# secrets and server key were rotated after the exposure (sha256 prefix old -> new):
+f46f34ef40ff secrets/crypto_master_key.txt	c77d32e99e5e secrets/crypto_master_key.txt
+171c80079087 secrets/db_password.txt	7f34aefdf81d secrets/db_password.txt
+8a34f36d8712 secrets/db_root_password.txt	70c306706831 secrets/db_root_password.txt
+ccd1d78f9820 certs/server.key	363964b45622 certs/server.key
+
+## via the proxy (https://localhost)
+/secrets/crypto_master_key.txt   -> 404 (146 bytes)
+/secrets/db_password.txt         -> 404 (146 bytes)
+/certs/lab-ca.key                -> 404 (146 bytes)
+/certs/server.key                -> 404 (146 bytes)
+/secrets/                        -> 404 (146 bytes)
+/evidence/                       -> 404 (146 bytes)
+/.git/config                     -> 404 (146 bytes)
+
+## directly against Apache inside the docker network (bypassing nginx), from the proxy container
+/secrets/crypto_master_key.txt   ->   HTTP/1.1 404 Not Found
+/secrets/db_password.txt         ->   HTTP/1.1 404 Not Found
+/certs/server.key                ->   HTTP/1.1 404 Not Found
+
+## what the dvwa container sees
+ls /var/www/html/secrets /var/www/html/certs:
+/var/www/html/certs:
+
+/var/www/html/secrets:
+ls /run/secrets:
+crypto_master_key
+db_password

@@ -27,7 +27,10 @@ $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	try {
-		if (array_key_exists ('message', $_POST)) {
+		if (array_key_exists ('message', $_POST) && $key === false) {
+			// Fail closed: no key, no encryption and no decryption. Details are in the server log only.
+			$errors = "The encryption service is not available. Please contact the administrator.";
+		} elseif (array_key_exists ('message', $_POST)) {
 			$message = $_POST['message'];
 			if (array_key_exists ('direction', $_POST) && $_POST['direction'] == "decode") {
 				$encoded = sc_decrypt($message, $key);
@@ -39,6 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$decode_radio_selected = " checked='checked' ";
 			} else {
 				$encoded = sc_encrypt($message, $key);
+				if ($encoded === false) {
+					$errors = "The encryption service is not available. Please contact the administrator.";
+					$encoded = null;
+				}
 			}
 		}
 		if (array_key_exists ('password', $_POST)) {

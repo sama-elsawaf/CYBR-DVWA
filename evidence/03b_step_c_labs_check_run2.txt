@@ -1,0 +1,17 @@
+PASS  setup.php reset
+PASS  login admin/password (seeded Argon2id)
+PASS  brute [low] correct password accepted
+PASS  brute [low] wrong password rejected
+PASS  brute [medium] correct password accepted
+PASS  brute [medium] wrong password rejected
+PASS  brute [high] correct password accepted
+PASS  brute [high] wrong password rejected
+PASS  brute [impossible] correct password accepted
+PASS  brute [impossible] wrong password rejected
+PASS  csrf [low] password change accepted
+PASS  csrf test_credentials: new password valid
+PASS  csrf test_credentials: old password now wrong
+PASS  csrf [impossible] change with correct current password
+PASS  csrf [impossible] wrong current password rejected
+PASS  fresh login admin/password after the round trip
+ALL PASS

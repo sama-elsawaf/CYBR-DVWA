@@ -1,0 +1,28 @@
+## 1) GET /login.php (anonymous)   $ curl -i -c jar -b jar https://localhost/login.php
+HTTP/1.1 200 OK
+Set-Cookie: security=impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=c511a0191054943399f246d42ab5405c; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=bfa67c1be25cce2c77fa1f94687dd2df; path=/; secure; HttpOnly; SameSite=Strict
+
+PHPSESSID before login (from jar): bfa67c1be25cce2c77fa1f94687dd2df
+
+## 2) POST /login.php admin/password   $ curl -i -c jar -b jar -d 'username=admin&password=password&Login=Login&user_token=...'
+HTTP/1.1 302 Found
+Set-Cookie: PHPSESSID=91372e2ec495ba03d668d8b1c6116865; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=47ffb9f6043a45b48b543019f5d877d6; path=/; secure; HttpOnly; SameSite=Strict
+Location: index.php
+
+PHPSESSID after login (from jar):  47ffb9f6043a45b48b543019f5d877d6
+=> session id CHANGED at login
+
+## 3) Old (pre-login) id is dead: request index.php with ONLY the old PHPSESSID
+HTTP/1.1 302 Found
+Location: login.php
+
+## 4) New id works: GET /index.php with the jar
+HTTP/1.1 200 OK
+</ul><ul class="menuBlocks"><li class=""><a href="logout.php">Logout</a></li>
+
+## 5) Cookie jar (curl marks HttpOnly cookies with the #HttpOnly_ prefix; column 4 TRUE = Secure)
+#HttpOnly_localhost	FALSE	/	TRUE	0	PHPSESSID	47ffb9f6043a45b48b543019f5d877d6
+#HttpOnly_localhost	FALSE	/	TRUE	0	security	impossible.oYy5SeUa6fd65BlWfQFb3tqcigjnwL8rcKIoIi892yk

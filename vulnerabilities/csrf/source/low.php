@@ -8,8 +8,7 @@ if( isset( $_GET[ 'Change' ] ) ) {
 	// Do the passwords match?
 	if( $pass_new == $pass_conf ) {
 		// They do!
-		$pass_new = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass_new ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
-		$pass_new = md5( $pass_new );
+		$pass_new = ph_hash( $pass_new );   // R2: salted Argon2id instead of unsalted MD5 (hash is SQL-safe)
 
 		// Update the database
 		$current_user = dvwaCurrentUser();

@@ -1,0 +1,13 @@
+### D1 build-context check AFTER fixing .dockerignore
+$ tail -5 .dockerignore
+# D1: never copy secrets, keys or local env files into an image layer (Dockerfile does COPY . .)
+**/secrets/*.txt
+**/certs/*
+**/.env
+**/evidence
+$ sh evidence/tools/d1_build_context_check.sh
+var/www/html/certs/
+var/www/html/secrets/
+var/www/html/secrets/crypto_master_key.txt.example
+var/www/html/secrets/db_password.txt.example
+var/www/html/secrets/db_root_password.txt.example

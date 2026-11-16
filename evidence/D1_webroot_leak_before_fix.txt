@@ -1,0 +1,12 @@
+### D1 web-root leak check BEFORE fix (stack from step d; repo is bind-mounted as /var/www/html)
+# curl --cacert certs/lab-ca.crt -o /dev/null -w '%{http_code} (%{size_download} bytes)' https://localhost/<path>
+/secrets/crypto_master_key.txt   -> 200 (44 bytes)
+/secrets/db_password.txt         -> 200 (31 bytes)
+/certs/lab-ca.key                -> 403 (274 bytes)
+/certs/server.key                -> 200 (227 bytes)
+/secrets/                        -> 200 (2080 bytes)
+/config/config.inc.php.dist      -> 200 (2752 bytes)
+/evidence/                       -> 200 (7501 bytes)
+/.git/config                     -> 200 (281 bytes)
+# 200 = file content served. lab-ca.key was only 403 because the host file is mode 600 (not readable by www-data).
+# Values are not reproduced here; the master key and DB password secrets were rotated after the fix.

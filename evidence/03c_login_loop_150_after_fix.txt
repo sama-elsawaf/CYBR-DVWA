@@ -1,0 +1,2 @@
+# 150 consecutive logins after the sandbox session.save_path fix
+bad 0

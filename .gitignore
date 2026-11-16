@@ -18,3 +18,10 @@ hackable/uploads/*
 .DS_Store
 
 .env
+
+# Milestone 2: secrets and TLS material are never committed
+secrets/*
+!secrets/*.example
+certs/*
+!certs/.gitkeep
+__pycache__/

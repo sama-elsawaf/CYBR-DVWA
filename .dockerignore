@@ -4,3 +4,8 @@
 **/Dockerfile*
 **/.dockerignore
 **/compose.yml
+# D1: never copy secrets, keys or local env files into an image layer (Dockerfile does COPY . .)
+**/secrets/*.txt
+**/certs/*
+**/.env
+**/evidence

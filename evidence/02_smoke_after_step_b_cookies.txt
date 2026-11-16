@@ -1,0 +1,5 @@
+setup.php reset: OK
+login admin/password: OK (final URL http://127.0.0.1:4280/index.php)
+crypto encode (low): 'Ab4VLUYo1hYcP+dn2JrSuSgO1zVSVo90OUqcMee0G+PmWe0YMYhc+BVk+cv0rw==' warn=None HTTP 200
+crypto decode (low): 'hello milestone 2' warn=None
+SMOKE PASS

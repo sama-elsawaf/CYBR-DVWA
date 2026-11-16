@@ -1,0 +1,23 @@
+### D1 build-context check BEFORE fixing .dockerignore
+$ cat .dockerignore
+**/.git
+**/.gitignore
+**/.github
+**/Dockerfile*
+**/.dockerignore
+**/compose.yml
+$ sh evidence/tools/d1_build_context_check.sh
+var/www/html/certs/
+var/www/html/certs/.gitkeep
+var/www/html/certs/lab-ca.crt
+var/www/html/certs/lab-ca.key
+var/www/html/certs/lab-ca.srl
+var/www/html/certs/server.crt
+var/www/html/certs/server.key
+var/www/html/secrets/
+var/www/html/secrets/crypto_master_key.txt
+var/www/html/secrets/crypto_master_key.txt.example
+var/www/html/secrets/db_password.txt
+var/www/html/secrets/db_password.txt.example
+var/www/html/secrets/db_root_password.txt
+var/www/html/secrets/db_root_password.txt.example
