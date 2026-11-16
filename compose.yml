@@ -6,6 +6,18 @@ networks:
   dvwa:
 
 
+# R7 / D2: secrets live in files under ./secrets (gitignored), never in this file or in the
+# container environment. Create them once with scripts/gen_secrets.sh (or gen_secrets.ps1).
+# Compose mounts each one read-only at /run/secrets/<name> inside the container.
+secrets:
+  crypto_master_key:
+    file: ./secrets/crypto_master_key.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  db_root_password:
+    file: ./secrets/db_root_password.txt
+
+
 services:
   dvwa:
     build: .
@@ -14,12 +26,18 @@ services:
     pull_policy: always
     environment:
       - DB_SERVER=db
-      # 32-byte AES key, base64. Set it in a local .env file (see .env.example); never commit the real key.
-      - CRYPTO_KEY_B64=${CRYPTO_KEY_B64:?set CRYPTO_KEY_B64 in .env}
+      # Only the PATHS of the secrets are in the environment, not the values.
+      - CRYPTO_KEY_FILE=/run/secrets/crypto_master_key
+      - DB_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - crypto_master_key
+      - db_password
     depends_on:
       - db
     volumes:
       - ./:/var/www/html
+      # Always use the committed, secret-free config (no stale local copy with old defaults).
+      - ./config/config.inc.php.dist:/var/www/html/config/config.inc.php:ro
     networks:
       - dvwa
     ports:
@@ -29,10 +47,13 @@ services:
   db:
     image: docker.io/library/mariadb:10
     environment:
-      - MYSQL_ROOT_PASSWORD=dvwa
-      - MYSQL_DATABASE=dvwa
-      - MYSQL_USER=dvwa
-      - MYSQL_PASSWORD=p@ssw0rd
+      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MARIADB_DATABASE=dvwa
+      - MARIADB_USER=dvwa
+      - MARIADB_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_root_password
+      - db_password
     volumes:
       - dvwa:/var/lib/mysql
     networks:

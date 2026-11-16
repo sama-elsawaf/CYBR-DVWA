@@ -3,7 +3,7 @@
  * Preliminary tests for secure_crypto.php  -  run:  php test_secure_crypto.php
  * Each line prints PASS/FAIL. Copy the output into your progress report as evidence.
  */
-require __DIR__ . '/secure_crypto.php';
+require __DIR__ . '/../vulnerabilities/cryptography/source/secure_crypto.php';   // the deployed module, not a copy
 
 $pass = 0; $fail = 0;
 function check(string $name, bool $ok): void {
@@ -41,14 +41,35 @@ check("wrong key rejected", sc_decrypt(sc_encrypt($msg, $key), random_bytes(32))
 check("AAD match accepted", sc_decrypt(sc_encrypt($msg, $key, "user:2"), $key, "user:2") === $msg);
 check("AAD mismatch rejected", sc_decrypt(sc_encrypt($msg, $key, "user:2"), $key, "user:3") === false);
 
-// T6 key handling: no key / short key must fail closed
-putenv('CRYPTO_KEY_B64'); putenv('CRYPTO_KEY_FILE');
-check("missing key -> sc_load_key() false", sc_load_key() === false);
-putenv('CRYPTO_KEY_B64=' . base64_encode("short"));
-check("short key -> sc_load_key() false", sc_load_key() === false);
+// T6 key handling: the master key comes ONLY from the file in CRYPTO_KEY_FILE; anything else fails closed
+$kf = tempnam(sys_get_temp_dir(), 'key');
+putenv('CRYPTO_KEY_FILE');
+check("CRYPTO_KEY_FILE unset -> sc_load_key() false", sc_load_key() === false);
 putenv('CRYPTO_KEY_B64=' . base64_encode($key));
-check("valid 32-byte key accepted", sc_load_key() === $key);
+check("old CRYPTO_KEY_B64 env var is ignored (no env fallback)", sc_load_key() === false);
+putenv("CRYPTO_KEY_FILE=$kf.missing");
+check("missing key file -> false", sc_load_key() === false);
+file_put_contents($kf, '');
+putenv("CRYPTO_KEY_FILE=$kf");
+check("empty key file -> false", sc_load_key() === false);
+file_put_contents($kf, base64_encode("short"));
+check("short (5-byte) key file -> false", sc_load_key() === false);
+file_put_contents($kf, base64_encode($key) . "\n");
+check("valid 32-byte master key accepted (trailing newline ok)", sc_load_master() === $key);
 check("sc_encrypt refuses a 5-byte key", sc_encrypt($msg, "short") === false);
+
+// T6b HKDF key separation: K_msg != K_cookie != master, both 32 bytes, deterministic
+$km = sc_load_key(); $kc = sc_cookie_key();
+check("K_msg and K_cookie are 32 bytes", strlen($km) === 32 && strlen($kc) === 32);
+check("K_msg != K_cookie != master", $km !== $kc && $km !== $key && $kc !== $key);
+check("K_msg = HKDF-SHA-256(master, info)", $km === hash_hkdf('sha256', $key, 32, SC_INFO_MSG));
+check("message encrypted with K_cookie does not decrypt with K_msg", sc_decrypt(sc_encrypt($msg, $kc), $km) === false);
+// RFC 5869 Test Case 1 (HKDF-SHA-256 known-answer) -> hash_hkdf is the standard construction
+$okm = hash_hkdf('sha256', hex2bin('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'), 42,
+                 hex2bin('f0f1f2f3f4f5f6f7f8f9'), hex2bin('000102030405060708090a0b0c'));
+check("HKDF known-answer (RFC 5869 TC1)", bin2hex($okm) ===
+      '3cb25f25faacd57a90434f64d0362f2a2d2d0a90cf1a5a4c5db02d56ecc4c5bf34007208d5b887185865');
+unlink($kf); putenv('CRYPTO_KEY_B64');
 
 // T7 nonce uniqueness over 100,000 messages
 $seen = []; $dup = 0;
