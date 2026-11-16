@@ -1,0 +1,3 @@
+normal: admin / password                                -> LOGGED IN
+comment-out bypass: admin' -- / anything                -> rejected
+UNION injecting an attacker-made Argon2id hash of 'x'   -> LOGGED IN
