@@ -59,9 +59,23 @@ services:
     depends_on:
       - dvwa
     volumes:
-      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./certs/server.crt:/etc/nginx/certs/server.crt:ro
-      - ./certs/server.key:/etc/nginx/certs/server.key:ro
+      # create_host_path: false -> a clear error if the certs were not generated yet,
+      # instead of Docker silently creating empty folders named server.crt / server.key.
+      - type: bind
+        source: ./proxy/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+        bind: { create_host_path: false }
+      - type: bind
+        source: ./certs/server.crt
+        target: /etc/nginx/certs/server.crt
+        read_only: true
+        bind: { create_host_path: false }
+      - type: bind
+        source: ./certs/server.key
+        target: /etc/nginx/certs/server.key
+        read_only: true
+        bind: { create_host_path: false }
     networks:
       - dvwa
     ports:
