@@ -1,8 +1,10 @@
 # SANDBOX-ONLY override used to produce the evidence in the cloud container
-# (see Dockerfile.sandbox for why). On your own machine you do NOT need this file.
+# (see Dockerfile.sandbox and 99-sandbox.ini for why). On your own machine you do NOT need this file.
 #   docker build -f evidence/sandbox/Dockerfile.sandbox -t dvwa-sandbox:latest evidence/sandbox
 #   docker compose -f compose.yml -f evidence/sandbox/compose.sandbox.yml up -d
 services:
   dvwa:
     image: dvwa-sandbox:latest
     pull_policy: never
+    volumes:
+      - ./evidence/sandbox/99-sandbox.ini:/etc/php/8.3/apache2/conf.d/99-sandbox.ini:ro
