@@ -8,7 +8,11 @@ mkdir -p secrets
 # If `docker compose up` ran before these files existed, Docker Desktop created EMPTY FOLDERS with
 # the secret file names. Remove those (only empty ones) so the files can be written.
 for f in crypto_master_key.txt db_password.txt db_root_password.txt; do
-  [ -d "secrets/$f" ] && rmdir "secrets/$f" && echo "removed empty folder secrets/$f (created by Docker)"
+  if [ -d "secrets/$f" ]; then
+    if rmdir "secrets/$f" 2>/dev/null; then echo "removed empty folder secrets/$f (created by Docker)"
+    else echo "ERROR: secrets/$f is a FOLDER with files in it (Docker created it, then something was moved into it):"; ls -la "secrets/$f"
+         echo "       move the file out (e.g. mv secrets/$f/key.bak secrets/key.bak), delete the folder, run this again."; exit 1; fi
+  fi
 done
 umask 022   # the files must be readable by the container user (www-data / mysql)
 mk() { [ -s "secrets/$1" ] && { echo "keep    secrets/$1"; return; }; printf '%s' "$2" > "secrets/$1"; echo "created secrets/$1"; }

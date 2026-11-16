@@ -25,3 +25,4 @@ secrets/*
 certs/*
 !certs/.gitkeep
 __pycache__/
+.e1_cookiejar.txt

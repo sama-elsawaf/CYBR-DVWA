@@ -1,47 +1,47 @@
 Valid cookies issued by security.php:
-  low        = impossible.
-  impossible = impossible.
-  medium     = impossible.
+  low        = low.q5ZazBflBsenuMwJoJg8sXpG8U0-s-ttliGm7e82J1k
+  impossible = impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+  medium     = medium.dJTZ3cMTYciy4zXWOq51oTEVmZi526LtBH9mPfrLzJM
 
-FAIL  valid signed low (control)
-      $ curl -i --cookie 'PHPSESSID=<sid>; security=impossible.' https://localhost/vulnerabilities/brute/
+PASS  valid signed low (control)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.q5ZazBflBsenuMwJoJg8sXpG8U0-s-ttliGm7e82J1k' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  valid signed medium (control)
-      $ curl -i --cookie 'PHPSESSID=<sid>; security=impossible.' https://localhost/vulnerabilities/brute/
+      page shows Security Level: low (expected low); server Set-Cookie: (none)
+PASS  valid signed medium (control)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=medium.dJTZ3cMTYciy4zXWOq51oTEVmZi526LtBH9mPfrLzJM' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  plain 'low' (old DVWA format)
+      page shows Security Level: medium (expected medium); server Set-Cookie: (none)
+PASS  plain 'low' (old DVWA format)
       $ curl -i --cookie 'PHPSESSID=<sid>; security=low' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  plain 'impossible'
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  plain 'impossible'
       $ curl -i --cookie 'PHPSESSID=<sid>; security=impossible' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  plain 'medium'
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  plain 'medium'
       $ curl -i --cookie 'PHPSESSID=<sid>; security=medium' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  level changed, MAC kept: 'low.' + MAC(impossible)
-      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.' https://localhost/vulnerabilities/brute/
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  level changed, MAC kept: 'low.' + MAC(impossible)
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  one MAC char changed
-      $ curl -i --cookie 'PHPSESSID=<sid>; security=impossibleA' https://localhost/vulnerabilities/brute/
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  one MAC char changed
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=low.q5ZazBflBsenuMwJoJg8sXpG8U0-s-ttliGm7e82J1A' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  random MAC
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  random MAC
       $ curl -i --cookie 'PHPSESSID=<sid>; security=low.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  empty MAC 'low.'
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  empty MAC 'low.'
       $ curl -i --cookie 'PHPSESSID=<sid>; security=low.' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
-FAIL  unknown level 'admin.' + MAC
-      $ curl -i --cookie 'PHPSESSID=<sid>; security=admin.' https://localhost/vulnerabilities/brute/
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
+PASS  unknown level 'admin.' + MAC
+      $ curl -i --cookie 'PHPSESSID=<sid>; security=admin.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo' https://localhost/vulnerabilities/brute/
       (session's real level before the request: medium)
-      page shows Security Level: ? (expected impossible); server Set-Cookie: (none)
+      page shows Security Level: impossible (expected impossible); server Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo
 
-SOME FAILED
+ALL PASS

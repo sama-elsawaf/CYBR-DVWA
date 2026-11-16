@@ -1,14 +1,29 @@
+# curl: curl 8.23.0 (x86_64-w64-mingw32) libcurl/8.23.0 Schannel zlib/1.3.2 brotli/1.2.1 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 WinLDAP
 ## 1) GET /login.php (anonymous)   $ curl -i -c jar -b jar https://localhost/login.php
+HTTP/1.1 200 OK
+Set-Cookie: security=impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=57335c5799f46a371326a95b8c221715; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=4e428eceb1c31859a7bc67e9ab8a06a1; path=/; secure; HttpOnly; SameSite=Strict
 
-PHPSESSID before login (from jar): 
+PHPSESSID before login (from jar): 4e428eceb1c31859a7bc67e9ab8a06a1
 
 ## 2) POST /login.php admin/password   $ curl -i -c jar -b jar -d 'username=admin&password=password&Login=Login&user_token=...'
+HTTP/1.1 302 Found
+Set-Cookie: PHPSESSID=4f0fea465980555f5985634c5cafe320; path=/; secure; HttpOnly; SameSite=Strict
+Set-Cookie: PHPSESSID=8ec7ff7aa7e319e80d732ab922dd86ec; path=/; secure; HttpOnly; SameSite=Strict
+Location: index.php
 
-PHPSESSID after login (from jar):  
-=> session id did NOT change
+PHPSESSID after login (from jar):  8ec7ff7aa7e319e80d732ab922dd86ec
+=> session id CHANGED at login
 
 ## 3) Old (pre-login) id is dead: request index.php with ONLY the old PHPSESSID
+HTTP/1.1 302 Found
+Location: login.php
 
 ## 4) New id works: GET /index.php with the jar
+HTTP/1.1 200 OK
+</ul><ul class="menuBlocks"><li class=""><a href="logout.php">Logout</a></li>
 
 ## 5) Cookie jar (curl marks HttpOnly cookies with the #HttpOnly_ prefix; column 4 TRUE = Secure)
+#HttpOnly_localhost	FALSE	/	TRUE	0	PHPSESSID	8ec7ff7aa7e319e80d732ab922dd86ec
+#HttpOnly_localhost	FALSE	/	TRUE	0	security	impossible.356jETxyV9JGk0weGHijfTVTsFGKna9rwqwRxOifvBo

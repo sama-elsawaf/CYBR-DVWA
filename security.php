@@ -31,7 +31,12 @@ if( isset( $_POST['seclev_submit'] ) ) {
 	}
 
 	dvwaSecurityLevelSet( $securityLevel );
-	dvwaMessagePush( "Security level set to {$securityLevel}" );
+	if( dvwaSecurityLevelGet() === $securityLevel ) {
+		dvwaMessagePush( "Security level set to {$securityLevel}" );
+	} else {
+		// fail closed: without the master key the level cookie cannot be signed (see secure_crypto.php)
+		dvwaMessagePush( "Security level could not be changed (signing key unavailable); it stays at " . dvwaSecurityLevelGet() );
+	}
 	dvwa_start_session();
 	dvwaPageReload();
 }
