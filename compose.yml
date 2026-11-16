@@ -40,6 +40,12 @@ services:
       - ./:/var/www/html
       # Always use the committed, secret-free config (no stale local copy with old defaults).
       - ./config/config.inc.php.dist:/var/www/html/config/config.inc.php:ro
+      # D1: the repo is the web root, so hide the host's secret and certificate folders inside the
+      # container (empty tmpfs on top). The app reads secrets from /run/secrets only.
+      - type: tmpfs
+        target: /var/www/html/secrets
+      - type: tmpfs
+        target: /var/www/html/certs
     networks:
       - dvwa
     # R1: no published port. DVWA is only reachable through the TLS proxy below.
