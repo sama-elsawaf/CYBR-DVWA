@@ -1,0 +1,9 @@
+| operation (PHP 8.5.11, OpenSSL 3.5.7 9 Jun 2026) | n | mean us | p95 us |
+|---|---:|---:|---:|
+| XOR encode, key 'wachtwoord' + base64 (old low.php)        |   2000 |       4.05 |       4.36 |
+| AES-256-GCM sc_encrypt (random nonce, base64)              |   2000 |       4.62 |       3.65 |
+| AES-256-GCM sc_decrypt (tag check)                         |   2000 |       7.84 |      11.35 |
+| HKDF-SHA-256 derive one 32-byte key                        |   2000 |       2.05 |       2.56 |
+| md5(password) compare (old login)                          |   2000 |       0.70 |       0.58 |
+| Argon2id password_verify (m=19456 KiB, t=2, p=1)           |    200 |   52954.40 |   55559.84 |
+| Argon2id password_hash (new hash, same params)             |    200 |   54031.48 |   58996.52 |

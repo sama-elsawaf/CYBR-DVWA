@@ -1,0 +1,16 @@
+done: Encode, OLD XOR low.php (direct HTTP)
+done: Encode, NEW AES-256-GCM low.php (direct HTTP)
+done: Encode, NEW AES-256-GCM via TLS 1.3 proxy (end to end)
+done: Login POST, OLD MD5 (direct HTTP)
+done: Login POST, NEW Argon2id (direct HTTP)
+done: Login POST, NEW Argon2id via TLS 1.3 proxy
+
+### F1 results: 200 sequential requests per row (client: python requests, keep-alive session; time = full request/response)
+| Path | mean ms | median ms | p95 ms | min ms | max ms |
+|---|---:|---:|---:|---:|---:|
+| Encode, OLD XOR low.php (direct HTTP) | 38.08 | 36.88 | 49.74 | 26.48 | 64.49 |
+| Encode, NEW AES-256-GCM low.php (direct HTTP) | 63.33 | 71.99 | 102.48 | 12.86 | 136.96 |
+| Encode, NEW AES-256-GCM via TLS 1.3 proxy (end to end) | 75.50 | 72.05 | 106.63 | 52.16 | 162.79 |
+| Login POST, OLD MD5 (direct HTTP) | 24.16 | 23.31 | 29.96 | 17.83 | 61.95 |
+| Login POST, NEW Argon2id (direct HTTP) | 80.74 | 87.40 | 103.93 | 21.32 | 152.20 |
+| Login POST, NEW Argon2id via TLS 1.3 proxy | 94.89 | 88.57 | 120.60 | 79.17 | 276.42 |
